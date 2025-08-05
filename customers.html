@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SkinBloom — Customer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customers.css" />
+
+  <script type="module">
+    import { neon } from "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.7.0/+esm";
+
+    // ✅ Use your actual Neon connection string here
+    const connectionString = "postgresql://neondb_owner:npg_J1gloZUcFQS2@ep-still-truth-a1051s4o-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+    const sql = neon(connectionString);
+
+    // ✅ FETCH all customers
+    async function fetchAllCustomers() {
+      try {
+        const result = await sql`SELECT * FROM customers ORDER BY customer_id ASC`;
+        if (result.length === 0) {
+          document.getElementById('output').innerHTML = 'No customers found.';
+          return;
+        }
+        let html = '<table border="1" cellpadding="5"><tr>';
+        for (const key in result[0]) html += `<th>${key}</th>`;
+        html += '</tr>';
+        for (const row of result) {
+          html += '<tr>';
+          for (const key in row) html += `<td>${row[key]}</td>`;
+          html += '</tr>';
+        }
+        html += '</table>';
+        document.getElementById('output').innerHTML = html;
+      } catch (err) {
+        document.getElementById('output').textContent = 'Error: ' + err.message;
+      }
+    }
+
+    // ✅ INSERT a new customer
+    async function addCustomer() {
+      const firstName = document.getElementById('firstNameInput').value || 'John';
+      const lastName = document.getElementById('lastNameInput').value || 'Doe';
+      const email = document.getElementById('emailInput').value || 'johndoe@example.com';
+      const phone = document.getElementById('phoneInput').value || '000-0000';
+
+      try {
+        await sql`
+          INSERT INTO customers ("business_id", "first_name", "last_name", "email", "phone", "created_at")
+          VALUES (1, ${firstName}, ${lastName}, ${email}, ${phone}, NOW())
+        `;
+        fetchAllCustomers();
+      } catch (err) {
+        document.getElementById('output').textContent = 'Add Error: ' + err.message;
+      }
+    }
+
+    // ✅ UPDATE last customer
+    async function updateCustomer() {
+      try {
+        await sql`
+          UPDATE customers
+          SET phone = '111-1111'
+          WHERE customer_id = (SELECT customer_id FROM customers ORDER BY customer_id DESC LIMIT 1)
+        `;
+        fetchAllCustomers();
+      } catch (err) {
+        document.getElementById('output').textContent = 'Update Error: ' + err.message;
+      }
+    }
+
+    // ✅ DELETE last customer
+    async function deleteCustomer() {
+      try {
+        await sql`
+          DELETE FROM customers
+          WHERE customer_id = (SELECT customer_id FROM customers ORDER BY customer_id DESC LIMIT 1)
+        `;
+        fetchAllCustomers();
+      } catch (err) {
+        document.getElementById('output').textContent = 'Delete Error: ' + err.message;
+      }
+    }
+
+    window.onload = fetchAllCustomers;
+    window.addCustomer = addCustomer;
+    window.updateCustomer = updateCustomer;
+    window.deleteCustomer = deleteCustomer;
+  </script>
+</head>
+<body>
+  <h1>Customer Management</h1>
+
+  <div class="form-actions">
+    <div class="form-inputs">
+      <input id="firstNameInput" placeholder="First Name" />
+      <input id="lastNameInput" placeholder="Last Name" />
+      <input id="emailInput" placeholder="Email" />
+      <input id="phoneInput" placeholder="Phone" />
+    </div>
+
+    <div class="icon-buttons">
+      <img src="add-icon.png" alt="Add" title="Add Customer" onclick="addCustomer()" />
+      <img src="update-icon.png" alt="Update" title="Update Last Customer" onclick="updateCustomer()" />
+      <img src="delete-icon.png" alt="Delete" title="Delete Last Customer" onclick="deleteCustomer()" />
+    </div>
+  </div>
+
+  <div id="output">Loading...</div>
+</body>
+</html>
