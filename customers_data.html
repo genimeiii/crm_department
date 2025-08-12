@@ -771,7 +771,11 @@
       <label>Birthday</label>
       <input id="modalDOB" type="date" placeholder="Date of Birth">
       <label>Status</label>
-      <input id="modalStatus" placeholder="Status">
+      <select id="modalStatus">
+        <option value="">Select Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
 
       <div class="modal-actions">
         <button class="btn-add" onclick="saveCustomer()">Save</button>
