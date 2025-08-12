@@ -217,59 +217,7 @@
       justify-content: flex-end;
     }
 
-    .btn-add {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(90deg, #9b8cfb, #3799fb);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 9999px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .btn-add:hover {
-      background: linear-gradient(90deg, #8b7cfb, #318af7);
-    }
-
-    .btn-add .icon {
-      width: 18px;
-      height: 18px;
-      stroke: white;
-    }
-
-    .btn-circle {
-      width: 42px;
-      height: 42px;
-      background-color: #f1f1f5;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .btn-circle:hover {
-      background-color: #e0e0eb;
-    }
-
-    .btn-circle .icon-pencil {
-      width: 20px;
-      height: 20px;
-      stroke: #6b7280;
-      transition: stroke 0.3s ease;
-    }
-
-    .btn-circle:hover .icon-pencil {
-      stroke: #4b8efb;
-    }
+    
 
     table {
       width: 100%;
@@ -498,13 +446,6 @@
             oninput="filterCustomers()"
           />
         </div>
-
-        <button class="btn-add" onclick="openModal()">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
-          Add
-        </button>
       </div>
 
       <div id="output">Loading...</div>
