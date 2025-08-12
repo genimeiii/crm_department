@@ -217,6 +217,32 @@
       justify-content: flex-end;
     }
 
+    .btn-add {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #9b8cfb, #3799fb);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(90deg, #8b7cfb, #318af7);
+    }
+
+    .btn-add .icon {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+    }
+
     .btn-circle {
       width: 42px;
       height: 42px;
@@ -251,9 +277,9 @@
     }
 
     table {
-      min-width: 800px; /* adjust based on your column count */
+      min-width: 800px;
       border-collapse: collapse;
-      margin-top: 0.5rem;
+      margin-top: -10px;
       font-family: 'Inter', sans-serif;
       font-size: 13px;
     }
@@ -262,13 +288,40 @@
       padding: 8px 10px;
       text-align: left;
       font-size: 13px;
-      white-space: nowrap; /* prevent cell wrapping */
+      white-space: nowrap; 
+      text-align: center;
+    }
+
+    th:nth-child(1),
+    th:nth-child(2),
+    th:nth-child(3),
+    td:nth-child(1),
+    td:nth-child(2),
+    td:nth-child(3) {
+      text-align: left;
     }
 
     th {
       color: #4B5563;
       font-weight: 600;
       border-bottom: 1px solid #E5E7EB;
+    }
+    
+    .status-badge {
+      display: block;
+      padding: 4px 14px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fdfffa;
+      letter-spacing: 0.5px;
+      text-align: center; 
+    }
+    .status-active {
+      background: #00B146;
+    }
+    .status-inactive {
+      background: #CF2C3A;
     }
 
     .table-actions {
@@ -351,6 +404,9 @@
       padding: 1.5rem;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
       font-size: 14px;
+      width: fit-content;    
+      max-width: 100%;        
+      margin: 0 auto; 
     }
 
     .modal-overlay {
@@ -368,8 +424,6 @@
       background: #fff;
       padding: 2rem;
       border-radius: 12px;
-      max-width: 600px; 
-      width: 90%;
       display: grid;
       grid-template-columns: 1fr 1fr; 
       gap: 1rem 2rem; 
@@ -391,7 +445,8 @@
       border-radius: 8px;
       font-size: 14px;
       font-family: 'Inter', sans-serif;
-      width: 20rem;
+      width: 100%;     
+      min-width: 0; 
     }
 
     .modal-actions {
@@ -410,9 +465,12 @@
     const sql = neon(connectionString);
 
     function formatDateToYYYYMMDD(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
+      if (!date) return '';
+      const d = new Date(date);
+      if (isNaN(d)) return '';
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
     
@@ -449,18 +507,22 @@
       let html = `
         <div class="table-container">
           <table>
+            <colgroup>
+              <col style="width: 140px;">
+              <col style="width: 200px;">
+              <col style="width: 220px;">
+              <col style="width: 190px;">
+              <col style="width: 130px;">
+              <col style="width: 160px;">
+              <col style="width: 120px;">
+            </colgroup>
+
             <tr>
               <th>Customer ID</th>
               <th>Customer Name</th>
-              <th>Email</th>
+              <th>Email Address</th>
               <th>Phone</th>
-              <th>Address</th>
-              <th>DOB</th>
-              <th>Gender</th>
-              <th>Registration Date</th>
               <th>Status</th>
-              <th>Preferred Contact</th>
-              <th>Created By</th>
               <th>Created At</th>
               <th style="text-align:right;">Actions</th>
             </tr>
@@ -469,22 +531,22 @@
       for (const row of data) {
         const createdAt = new Date(row.created_at);
         const formattedCreated = formatDateToYYYYMMDD(createdAt);
-        const regDate = row.registration_date ? formatDateToYYYYMMDD(new Date(row.registration_date)) : '';
-        const dob = row.date_of_birth ? formatDateToYYYYMMDD(new Date(row.date_of_birth)) : '';
+        const status = (row.customer_status || '').toLowerCase();
+        let statusClass = '';
+        if (status === 'active') statusClass = 'status-badge status-active';
+        else if (status === 'inactive') statusClass = 'status-badge status-inactive';
 
         html += `
           <tr>
-            <td>${row.customer_id}</td>
+            <td>C${String(row.customer_id).padStart(3, '0')}</td>
             <td>${row.first_name} ${row.last_name}</td>
             <td>${row.email}</td>
             <td>${row.phone}</td>
-            <td>${row.address || ''}</td>
-            <td>${dob}</td>
-            <td>${row.gender || ''}</td>
-            <td>${regDate}</td>
-            <td>${row.customer_status || ''}</td>
-            <td>${row.preferred_contact_method || ''}</td>
-            <td>${row.account_created_by || ''}</td>
+            <td><span class="${statusClass}">${
+              row.customer_status
+                ? row.customer_status.charAt(0).toUpperCase() + row.customer_status.slice(1).toLowerCase()
+                : '—'
+            }</span></td>
             <td>${formattedCreated}</td>
             <td>
               <div class="table-actions">
@@ -514,11 +576,19 @@
 
     // SEARCH FILTER
     function filterCustomers(keyword) {
-      const filtered = window.customerData.filter(row =>
-        (`${row.first_name} ${row.last_name}`.toLowerCase().includes(keyword.toLowerCase())) ||
-        (row.email && row.email.toLowerCase().includes(keyword.toLowerCase())) ||
-        (row.phone && row.phone.toLowerCase().includes(keyword.toLowerCase()))
-      );
+      keyword = keyword.trim().toLowerCase();
+      const filtered = window.customerData.filter(row => {
+        const fullName = `${row.first_name} ${row.last_name}`.toLowerCase();
+        const email = (row.email || '').toLowerCase();
+        const phone = (row.phone || '').toLowerCase();
+        const formattedId = `c${String(row.customer_id).padStart(3, '0')}`.toLowerCase();
+        return (
+          fullName.includes(keyword) ||
+          email.includes(keyword) ||
+          phone.includes(keyword) ||
+          formattedId.includes(keyword)
+        );
+      });
       renderTable(filtered);
     }
 
@@ -535,6 +605,9 @@
     // OPEN MODAL
     window.openModal = function () {
       document.getElementById("modalTitle").textContent = "Add Customer";
+      // Enable all fields
+      document.querySelectorAll("#customerModal input, #customerModal select").forEach(input => input.disabled = false);
+      document.getElementById("modalSaveBtn").style.display = "";
       document.getElementById("customerModal").style.display = "flex";
     };
 
@@ -572,9 +645,9 @@
             ${email}, 
             ${phone}, 
             ${address}, 
-            ${dateOfBirth || null}, 
+            ${dateOfBirth || '——'}, 
             ${gender}, 
-            ${registrationDate || null}, 
+            ${registrationDate || '——'}, 
             ${customerStatus}, 
             ${preferredContact}, 
             ${accountCreatedBy}, 
@@ -594,15 +667,23 @@
       if (!customer) return;
 
       document.getElementById("modalTitle").textContent = "View Customer";
-      document.getElementById("modalFirstName").value = customer.first_name;
-      document.getElementById("modalLastName").value = customer.last_name;
-      document.getElementById("modalEmail").value = customer.email;
-      document.getElementById("modalPhone").value = customer.phone;
+      document.getElementById("modalCustomerId").value = customer.customer_id ? `C${String(customer.customer_id).padStart(3, '0')}` : '';
+      document.getElementById("modalFirstName").value = customer.first_name || '';
+      document.getElementById("modalLastName").value = customer.last_name || '';
+      document.getElementById("modalEmail").value = customer.email || '';
+      document.getElementById("modalPhone").value = customer.phone || '';
       document.getElementById("modalAddress").value = customer.address || '';
-      document.getElementById("modalDOB").value = customer.date_of_birth ? formatDateToYYYYMMDD(new Date(customer.date_of_birth)) : '';
+      document.getElementById("modalDOB").value = customer.date_of_birth ? formatDateToYYYYMMDD(customer.date_of_birth) : '';
+      document.getElementById("modalGender").value = customer.gender
+        ? customer.gender.trim()
+        : '';
+      document.getElementById("modalRegDate").value = customer.registration_date ? formatDateToYYYYMMDD(customer.registration_date) : '';
       document.getElementById("modalStatus").value = customer.customer_status || '';
+      document.getElementById("modalPreferredContact").value = customer.preferred_contact_method || '';
+      document.getElementById("modalAccountCreatedBy").value = customer.account_created_by || '';
 
       document.querySelectorAll("#customerModal input, #customerModal select").forEach(input => input.disabled = true);
+      document.getElementById("modalSaveBtn").style.display = "none";
       document.getElementById("customerModal").style.display = "flex";
     };
 
@@ -614,13 +695,22 @@
       const modal = document.getElementById("pricingModal");
       document.getElementById("modalTitle").textContent = "Edit Customer";
 
+      document.getElementById("modalTitle").textContent = "Edit Customer";
+      document.getElementById("modalCustomerId").value = customer.customer_id ? `C${String(customer.customer_id).padStart(3, '0')}` : '';
       document.getElementById("modalFirstName").value = customer.first_name || '';
       document.getElementById("modalLastName").value  = customer.last_name || '';
       document.getElementById("modalEmail").value     = customer.email || '';
       document.getElementById("modalPhone").value     = customer.phone || '';
       document.getElementById("modalAddress").value   = customer.address || '';
-      document.getElementById("modalDOB").value       = customer.date_of_birth ? formatDateToYYYYMMDD(new Date(customer.date_of_birth)) : '';
+      document.getElementById("modalDOB").value = customer.date_of_birth ? formatDateToYYYYMMDD(customer.date_of_birth) : '';
+      document.getElementById("modalGender").value = customer.gender
+        ? customer.gender.trim()
+        : '';
+      document.getElementById("modalRegDate").value = customer.registration_date ? formatDateToYYYYMMDD(customer.registration_date) : '';
       document.getElementById("modalStatus").value    = customer.customer_status || '';
+      document.getElementById("modalSaveBtn").style.display = "";
+      document.getElementById("modalPreferredContact").value = customer.preferred_contact_method || '';
+      const accountCreatedBy = document.getElementById("modalAccountCreatedBy").value;
 
       document.querySelectorAll("#customerModal input, #customerModal select").forEach(input => input.disabled = false);
 
@@ -641,19 +731,19 @@
         try {
           await sql`
             UPDATE customers
-            SET first_name = ${firstName},
-                last_name = ${lastName},
-                email = ${email},
-                phone_number = ${phone},
-                address = ${address},
-                date_of_birth = ${dateOfBirth || null},
-                gender = ${gender}, 
-                registration_date = ${registrationDate || null},
-                customer_status = ${customerStatus},
-                preferred_contact_method = ${preferredContact},
-                account_created_by = ${accountCreatedBy}
-            WHERE customer_id = ${id}
-          `;
+          SET first_name = ${firstName},
+              last_name = ${lastName},
+              email = ${email},
+              phone_number = ${phone},
+              address = ${address},
+              date_of_birth = ${dateOfBirth || null},
+              gender = ${gender || null}, 
+              registration_date = ${registrationDate || null},
+              customer_status = ${customerStatus || null},
+              preferred_contact_method = ${preferredContact || null},
+              account_created_by = ${accountCreatedBy || null}
+          WHERE customer_id = ${id}  -- Make sure id is a number, not a string!
+        `;
           closeModal();
           fetchAllCustomers();
         } catch (error) {
@@ -711,10 +801,11 @@
           <input
             type="text"
             id="searchInput"
-            placeholder="Search customer..."
+            placeholder="Search..."
             oninput="filterCustomers()"
           />
         </div>
+      </div>
 
       <div id="output">Loading...</div>
     </main>
@@ -723,28 +814,64 @@
   <!-- Modal HTML -->
   <div id="customerModal" class="modal-overlay">
     <div class="modal-box">
-      <h2 id="modalTitle">Add Customer</h2>
-      <label>First Name</label>
-      <input id="modalFirstName" placeholder="First Name">
-      <label>Last Name</label>
-      <input id="modalLastName" placeholder="Last Name">
-      <label>Email</label>
-      <input id="modalEmail" placeholder="Email">
-      <label>Phone Number</label>
-      <input id="modalPhone" placeholder="Phone">
-      <label>Complete Address</label>
-      <input id="modalAddress" placeholder="Address">
-      <label>Birthday</label>
-      <input id="modalDOB" type="date" placeholder="Date of Birth">
-      <label>Status</label>
-      <select id="modalStatus">
-        <option value="">Select Status</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
+      <h2 id="modalTitle" style="grid-column: span 2;">Add Customer</h2>
+      
+      <div>
+        <label>Customer ID</label>
+        <input id="modalCustomerId" placeholder="Customer ID" disabled>
+      </div>
+      <div>
+        <label>Email</label>
+        <input id="modalEmail" placeholder="Email">
+      </div>
+      <div>
+        <label>First Name</label>
+        <input id="modalFirstName" placeholder="First Name">
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input id="modalLastName" placeholder="Last Name">
+      </div>
+      <div>
+        <label>Phone Number</label>
+        <input id="modalPhone" placeholder="Phone">
+      </div>
+      <div>
+        <label>Complete Address</label>
+        <input id="modalAddress" placeholder="Address">
+      </div>
+      <div>
+        <label>Birthday</label>
+        <input id="modalDOB" type="date" placeholder="YYYY-MM-DD">
+      </div>
+      <div>
+        <label>Gender</label>
+        <input id="modalGender" placeholder="Gender" disabled>
+      </div>
+      <div>
+        <label>Registration Date</label>
+        <input id="modalRegDate" type="text" placeholder="YYYY-MM-DD">
+      </div>
+      <div>
+        <label>Status</label>
+        <select id="modalStatus">
+          <option value="">Select Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div>
+        <label>Preferred Contact Method</label>
+        <input id="modalPreferredContact" placeholder="Preferred Contact">
+      </div>
+      <div>
+        <label>Account Created By</label>
+        <input id="modalAccountCreatedBy" placeholder="Account Created By">
+      </div>
+      <div></div> 
 
-      <div class="modal-actions">
-        <button class="btn-add" onclick="saveCustomer()">Save</button>
+      <div class="modal-actions" style="grid-column: span 2;">
+        <button id="modalSaveBtn" class="btn-add" onclick="saveCustomer()">Save</button>
         <button class="btn-circle" onclick="closeModal()">✕</button>
       </div>
     </div>
