@@ -250,6 +250,32 @@
       margin: 1rem 0 1rem auto;
     }
 
+    .btn-add {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #9b8cfb, #3799fb);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(90deg, #8b7cfb, #318af7);
+    }
+
+    .btn-add .icon {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -326,53 +352,55 @@
     const connectionString = "postgresql://neondb_owner:npg_J1gloZUcFQS2@ep-still-truth-a1051s4o-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
     const sql = neon(connectionString);
 
-    async function fetchAllFeedbacks() {
+    // Fetch all service requests with ticket & customer info
+    async function fetchAllRequests() {
       try {
         const result = await sql`
           SELECT
-            f.feedback_id,
-            f.customer_id,
-            COALESCE(CONCAT(c.first_name, ' ', c.last_name), '—') AS customer,
-            f.comments,
-            f.rating,
-            f.feedback_date,
-            f.order_id
-          FROM user_feedback f
-          LEFT JOIN customers c ON f.customer_id = c.customer_id
-          ORDER BY f.feedback_id ASC
+            sr.request_id,
+            sr.ticket_id,
+            sr.service_type,
+            sr.service_status,
+            t.ticket_status,
+            c.customer_id,
+            COALESCE(CONCAT(c.first_name, ' ', c.last_name), '—') AS customer
+          FROM service_requests sr
+          LEFT JOIN after_sales_tickets t ON sr.ticket_id = t.ticket_id
+          LEFT JOIN customers c ON t.customer_id = c.customer_id
+          ORDER BY sr.request_id ASC
         `;
-        window.feedbacks = result;
-        renderFeedbackTable(result);
+        window.serviceRequests = result;
+        renderRequestTable(result);
       } catch (err) {
         document.getElementById('output').textContent = 'Error: ' + err.message;
       }
     }
 
-    // Render feedback table
-    function renderFeedbackTable(data) {
+    // Render service request table
+    function renderRequestTable(data) {
       let html = `
         <table>
           <tr>
-            <th>Feedback ID</th>
+            <th>Request ID</th>
+            <th>Ticket ID</th>
             <th>Customer ID</th>
-            <th>Customer</th>
-            <th>Order ID</th>
-            <th>Comments</th>
-            <th>Rating</th>
-            <th>Date</th>
+            <th>Customer Name</th>
+            <th>Request Type</th>
+            <th>Request Status</th>
+            <th>Ticket Status</th>
           </tr>
       `;
 
       for (const row of data) {
         html += `
           <tr>
-            <td>${row.feedback_id}</td>
+            <td>${row.request_id}</td>
+            <td>${row.ticket_id}</td>
             <td>${row.customer_id ?? '—'}</td>
-            <td>${row.customer ?? '—'}</td>
-            <td>${row.order_id ?? '—'}</td>
-            <td>${row.comments ?? ''}</td>
-            <td>${row.rating ?? '—'}</td>
-            <td>${row.feedback_date ? new Date(row.feedback_date).toISOString().split('T')[0] : '—'}</td>
+            <td>${row.customer && row.customer.trim() !== '' ? row.customer : '—'}</td>
+            <td>${row.service_type ?? '—'}</td>
+            <td>${row.service_status ?? '—'}</td>
+            <td>${row.ticket_status ?? '—'}</td>
           </tr>
         `;
       }
@@ -382,24 +410,24 @@
     }
 
     // Search filter
-    function filterFeedbacks(keyword) {
-      const filtered = window.feedbacks.filter(row =>
-        (row.customer ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
-        (row.comments ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
-        String(row.rating ?? '').includes(keyword) ||
-        String(row.order_id ?? '').includes(keyword)
+    function filterRequests(keyword) {
+      const filtered = window.serviceRequests.filter(row =>
+        (row.service_type ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
+        (row.service_status ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
+        (row.ticket_status ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
+        (row.customer ?? '').toLowerCase().includes(keyword.toLowerCase())
       );
-      renderFeedbackTable(filtered);
+      renderRequestTable(filtered);
     }
 
     // On page load
     window.onload = () => {
-      fetchAllFeedbacks();
+      fetchAllRequests();
 
       const searchInput = document.getElementById("searchInput");
       if (searchInput) {
         searchInput.addEventListener("input", function () {
-          filterFeedbacks(this.value);
+          filterRequests(this.value);
         });
       }
     };
@@ -407,61 +435,61 @@
 
 </head>
 <body>
-<div class="container">
-<!-- Sidebar -->
-<aside class="sidebar">
-  <div>
-    <div class="logo">
-      <img src="logo.png" alt="Logo" />
-      SkinBloom
-    </div>
-    <nav class="nav">
-      <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
-      <a href="customers_data.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg><span>Customers Data</span></a>
-      <a href="leads.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-search-icon lucide-user-search"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>Lead & Opportunity</a>
-      <a href="sales_order.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-dollar-sign-icon lucide-badge-dollar-sign"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>Sales Order</a>
-      <a href="quota.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-quote-icon lucide-text-quote"><path d="M17 6H3"/><path d="M21 12H8"/><path d="M21 18H8"/><path d="M3 12v6"/></svg>Quotations & Pricing</a>
-      <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>Customer Support</a>
-    </nav>
-  </div>
-  <div class="bottom">
-    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Logout</a>
-  </div>
-</aside>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo">
+          <img src="logo.png" alt="Logo" />
+          SkinBloom
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
+          <a href="customers_data.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg><span>Customers Data</span></a>
+          <a href="leads.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-search-icon lucide-user-search"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>Lead & Opportunity</a>
+          <a href="sales_order.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-dollar-sign-icon lucide-badge-dollar-sign"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>Sales Order</a>
+          <a href="quota.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-quote-icon lucide-text-quote"><path d="M17 6H3"/><path d="M21 12H8"/><path d="M21 18H8"/><path d="M3 12v6"/></svg>Quotations & Pricing</a>
+          <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>Customer Support</a>
+        </nav>
+      </div>
+      <div class="bottom">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Logout</a>
+      </div>
+    </aside>
 
-<!-- Main Content -->
-<main class="main">
-  <h1>Customer Support</h1>
+    <!-- Main Content -->
+    <main class="main">
+      <h1>Customer Support</h1>
 
-  <div class="header-icons">
-    <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-    </svg>
-    <img src="profile.jpg" alt="Profile" class="profile-img" />
-  </div>
+      <div class="header-icons">
+        <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+        </svg>
+        <img src="profile.jpg" alt="Profile" class="profile-img" />
+      </div>
 
-  <div class="top-controls">
-    <div class="select-container">
-      <select name="lo" id="lo" onchange="navigateToPage()">
-        <option value="cs_feedbacks.html">Feedbacks</option>
-        <option value="cs_tickets.html">Tickets</option>
-        <option value="cs_requests.html">Requests</option>
-      </select>
-      <svg class="arrow-down-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M19 9l-7 7-7-7" />
-      </svg>
-    </div>
+      <div class="top-controls">
+        <div class="select-container">
+          <select name="lo" id="lo" onchange="navigateToPage()">
+            <option value="cs_requests.html">Requests</option>
+            <option value="cs_tickets.html">Tickets</option>
+            <option value="cs_feedbacks.html">Feedbacks</option>
+          </select>
+          <svg class="arrow-down-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
 
-    <script>
-      function navigateToPage() {
-        const selectedValue = document.getElementById("lo").value;
-        if (selectedValue) {
-          window.location.href = selectedValue;
-        }
-      }
-    </script>
+        <script>
+          function navigateToPage() {
+            const selectedValue = document.getElementById("lo").value;
+            if (selectedValue) {
+              window.location.href = selectedValue;
+            }
+          }
+        </script>
 
         <div class="search-container">
           <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -473,6 +501,16 @@
             placeholder="Search"
             oninput="filterCustomers()"
           />
+        </div>
+
+        <div class="icon-buttons">
+          <button class="btn-add" onclick="openLeadModal()">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4v16m8-8H4" />
+            </svg>
+            Add
+          </button>
         </div>
       </div>
 
@@ -498,4 +536,3 @@
 
 </body>
 </html>
-
