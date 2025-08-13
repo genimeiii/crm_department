@@ -115,29 +115,53 @@
       stroke: #ffffff;
     }
 
-    /* Main Content Styling */
-    .main {
-      flex: 1;
-      padding: 2rem 3rem;
+         /* Main Content Styling */
+     .main {
+       flex: 1;
+       background-color: #fdfffa;
+       overflow-y: auto;
+       font-family: 'Quicksand', sans-serif;
+       display: flex;
+       flex-direction: column;
+     }
+
+          /* Top Navigation Bar */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       background-color: #fdfffa;
-      overflow-y: auto;
-      font-family: 'Quicksand', sans-serif;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    h1 {
+    .page-title {
       font-family: 'Poppins', sans-serif;
       font-size: 26px;
-      margin-bottom: 1.5rem;
       color: #333135;
+      margin: 0;
     }
 
     .header-icons {
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      justify-content: flex-end;
-      margin-top: -70px; 
-      margin-bottom: 1rem;
+    }
+
+    .horizontal-line {
+        height: 1px;
+        background-color: #E5E7EB;
+        width: 90%;
+        margin: 0 auto;
+        opacity: 0.4;
+      }
+
+    .main-content {
+        flex: 1;
+        padding: 0.5rem 3rem 2rem 3rem;
+        overflow-y: auto;
     }
 
     .icon-bell {
@@ -166,13 +190,12 @@
       border-color: #4b8efb;
     }
 
-    /* Controls Styling */
     .top-controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 2rem;
-      align-items: center;
-      padding: 10px;
+       display: flex;
+       gap: 10px;
+       margin-top: 0;
+       align-items: center;
+       padding: 5px;
     }
 
     .select-container {
@@ -212,15 +235,16 @@
     }
 
     .search-container {
-      display: flex;
-      align-items: center;
-      border: 1px solid #B3B3B3;
-      border-radius: 999px;
-      padding: 6px 12px;
-      width: 100%;
-      max-width: 400px;
-      background-color: #f9f9f9;
-      transition: border-color 0.2s;
+       display: flex;
+       align-items: center;
+       border: 1px solid #B3B3B3;
+       border-radius: 999px;
+       padding: 6px 12px;
+       width: 100%;
+       max-width: 400px;
+       background-color: transparent;
+       transition: border-color 0.2s;
+       margin-bottom: 0.5rem;
     }
 
     .search-container:focus-within {
@@ -373,6 +397,7 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
+       padding: 20px;
     }
 
     .modal-box {
@@ -392,19 +417,38 @@
       color: #374151;
     }
 
-    .modal-box input {
-      padding: 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-    }
+         .modal-box input,
+     .modal-box select {
+       padding: 10px;
+       border: 1px solid #d1d5db;
+       border-radius: 8px;
+       font-size: 14px;
+       font-family: 'Inter', sans-serif;
+       width: 100%;
+     }
 
-    .modal-actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
+     .modal-box select {
+       background-color: white;
+       cursor: pointer;
+     }
+
+     .modal-actions {
+       display: flex;
+       justify-content: space-between;
+       margin-top: 1rem;
+     }
+
+     #viewCustomerContent p {
+       margin: 0.5rem 0;
+       font-size: 14px;
+       line-height: 1.5;
+     }
+
+     #viewCustomerContent h3 {
+       font-family: 'Poppins', sans-serif;
+       font-size: 16px;
+       margin-bottom: 1rem;
+     }
   </style>
 </head>
 
@@ -489,60 +533,155 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="main">
-      <h1>Lead and Opportunity</h1>
-
-      <div class="header-icons">
-        <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-        </svg>
-        <img src="profile.jpg" alt="Profile" class="profile-img" />
-      </div>
-
-      <div class="top-controls">
-        <div class="select-container">
-          <select name="lo" id="lo" onchange="navigateToPage()">
-            <option value="leads.html">Leads</option>
-            <option value="opportunity.html">Opportunity</option>
-          </select>
-          <svg class="arrow-down-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
+         <!-- Main Content -->
+     <main class="main">
+               <!-- Top Navigation Bar -->
+        <div class="top-nav">
+          <h1 class="page-title">Lead and Opportunity</h1>
+          <div class="header-icons">
+            <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+            </svg>
+            <img src="profile.jpg" alt="Profile" class="profile-img" />
+          </div>
         </div>
 
-        <div class="search-container">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
-          </svg>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search"
-            oninput="filterLeads(this.value)"
-          />
+        <!-- Horizontal Line -->
+        <div class="horizontal-line"></div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+         <div class="top-controls">
+           <div class="search-container">
+             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+             </svg>
+             <input
+               type="text"
+               id="searchInput"
+               placeholder="Search"
+               oninput="filterLeads(this.value)"
+             />
+           </div>
+         </div>
+
+         <div id="output">Loading...</div>
+       </div>
+     </main>
+  </div>
+
+     <!-- Add Customer Modal -->
+   <div id="customerModal" class="modal-overlay">
+     <div class="modal-box">
+       <h2 id="modalTitle">Add Customer</h2>
+       <input id="modalFirstName" placeholder="First Name">
+       <input id="modalLastName" placeholder="Last Name">
+       <input id="modalEmail" placeholder="Email">
+       <input id="modalPhone" placeholder="Phone">
+
+       <div class="modal-actions">
+         <button class="btn-add" onclick="saveCustomer()">Save</button>
+         <button class="btn-circle" onclick="closeModal()">✕</button>
+       </div>
+     </div>
+   </div>
+
+               <!-- View Customer Modal -->
+     <div id="viewCustomerModal" class="modal-overlay">
+       <div class="modal-box">
+         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+           <h2 style="margin: 0;">Customer Details</h2>
+           <button class="btn-circle" onclick="closeViewModal()" style="width: 32px; height: 32px; font-size: 14px;">✕</button>
+         </div>
+         <div id="viewCustomerContent">
+           <!-- Content will be populated dynamically -->
+         </div>
+       </div>
+     </div>
+
+                               <!-- Edit Customer Modal -->
+      <div id="editCustomerModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 800px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="margin: 0;">Edit Customer</h2>
+            <button class="btn-circle" onclick="closeEditModal()" style="width: 32px; height: 32px; font-size: 14px;">✕</button>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+              <h3 style="margin-bottom: 1rem; color: #374151; font-size: 16px; font-weight: 600;">Customer Information</h3>
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Customer ID</label>
+                  <input id="editCustomerId" readonly style="width: 100%; background-color: #f9fafb; color: #6b7280;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">First Name</label>
+                  <input id="editFirstName" placeholder="Enter first name" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Phone Number</label>
+                  <input id="editPhone" placeholder="Enter phone number" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Registration Date</label>
+                  <input id="editRegistrationDate" type="date" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Preferred Contact Method</label>
+                  <select id="editContactMethod" style="width: 100%;">
+                    <option value="phone">Phone</option>
+                    <option value="email">Email</option>
+                    <option value="sms">SMS</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 style="margin-bottom: 1rem; color: #374151; font-size: 16px; font-weight: 600;">Lead & Opportunity</h3>
+              <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Email</label>
+                  <input id="editEmail" placeholder="Enter email address" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Last Name</label>
+                  <input id="editLastName" placeholder="Enter last name" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Complete Address</label>
+                  <input id="editAddress" placeholder="Enter complete address" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Gender</label>
+                  <select id="editGender" style="width: 100%;">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Status</label>
+                  <select id="editStatus" style="width: 100%;">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="pending">Pending</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 0.5rem; color: #6B7280; font-size: 14px; font-weight: 500;">Account Created By</label>
+                  <input id="editCreatedBy" readonly style="width: 100%; background-color: #f9fafb; color: #6b7280;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-actions" style="margin-top: 2rem; justify-content: flex-end;">
+            <button class="btn-add" onclick="saveEditCustomer()" style="min-width: 100px;">Save</button>
+          </div>
         </div>
       </div>
-
-      <div id="output">Loading...</div>
-    </main>
-  </div>
-
-  <!-- Modal HTML -->
-  <div id="customerModal" class="modal-overlay">
-    <div class="modal-box">
-      <h2 id="modalTitle">Add Customer</h2>
-      <input id="modalFirstName" placeholder="First Name">
-      <input id="modalLastName" placeholder="Last Name">
-      <input id="modalEmail" placeholder="Email">
-      <input id="modalPhone" placeholder="Phone">
-
-      <div class="modal-actions">
-        <button class="btn-add" onclick="saveCustomer()">Save</button>
-        <button class="btn-circle" onclick="closeModal()">✕</button>
-      </div>
-    </div>
-  </div>
 
   <script type="module">
     import { neon } from "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.7.0/+esm";
@@ -551,6 +690,34 @@
 
     // Global variables
     window.salesLeads = [];
+
+     // Fetch complete customer details from database - define this first
+     window.fetchCustomerDetails = async function(customerId) {
+       try {
+         const result = await sql`
+           SELECT 
+             customer_id,
+             first_name,
+             last_name,
+             email,
+             phone_number,
+             address,
+             date_of_birth,
+             gender,
+             registration_date,
+             customer_status,
+             preferred_contact_method,
+             account_created_by,
+             created_at
+           FROM customers
+           WHERE customer_id = ${customerId}
+         `;
+         return result[0];
+       } catch (error) {
+         console.error('Error fetching customer details:', error);
+         return null;
+       }
+     };
 
     // Fetch all sales leads with JOINs
     async function fetchAllLeads() {
@@ -563,11 +730,15 @@
             l.lead_source AS source,
             l.lead_status AS status,
             l.created_at,
-            o.opportunity_id
+            o.opportunity_id,
+            o.potential_value,
+            o.opportunity_status,
+            o.expected_close_date,
+            o.updated_at
           FROM sales_leads l
           LEFT JOIN customers c ON l.customer_id = c.customer_id
           LEFT JOIN opportunities o ON o.lead_id = l.lead_id
-          ORDER BY l.lead_id ASC
+                     ORDER BY l.lead_id DESC
         `;
         
         console.log('Fetched leads data:', result);
@@ -589,19 +760,25 @@
       let html = `
         <table>
           <colgroup>
-            <col style="width: 120px;">
-            <col style="width: 120px;">
+            <col style="width: 100px;">
             <col style="width: 120px;">
             <col style="width: 150px;">
             <col style="width: 140px;">
+            <col style="width: 120px;">
+            <col style="width: 120px;">
+            <col style="width: 120px;">
+            <col style="width: 120px;">
             <col style="width: 130px;">
           </colgroup>
           <tr>
             <th style="text-align: center;">Lead ID</th>
-            <th style="text-align: center;">Opportunity ID</th>
             <th style="text-align: center;">Source</th>
             <th style="text-align: center;">Status</th>
             <th style="text-align: center;">Created At</th>
+            <th style="text-align: center;">Opportunity ID</th>
+            <th style="text-align: center;">Potential Value</th>
+            <th style="text-align: center;">Opp Status</th>
+            <th style="text-align: center;">Expected Close</th>
             <th style="text-align: right;">Actions</th>
           </tr>
       `;
@@ -613,31 +790,56 @@
           ? status.charAt(0).toUpperCase() + status.slice(1)
           : '—';
           
-        // Define status colors with light backgrounds
-        let statusColor = '#f3f4f6'; // default light gray background
-        let textColor = '#6b7280'; // default gray text
+        let statusColor = '#f3f4f6'; 
+        let textColor = '#fdfffa'; 
         
         if (status === 'qualified') {
-          statusColor = '#e6f7ed';
-          textColor = '#00b146';
+          statusColor = '#00b146';
+          textColor = '#fdfffa';
         } else if (status === 'lost') {
-          statusColor = '#fde8e8';
-          textColor = '#cf2c3a';
+          statusColor = '#cf2c3a';
+          textColor = '#fdfffa';
         } else if (status === 'contacted') {
-          statusColor = '#fff3e0';
-          textColor = '#ffa300';
+          statusColor = '#FFA300';
+          textColor = '#fdfffa';
         } else if (status === 'new') {
-          statusColor = '#e3f2fd';
-          textColor = '#1979fe';
+          statusColor = '#1979FE';
+          textColor = '#fdfffa';
+        }
+
+        // Format opportunity status and get color
+        const oppStatus = row.opportunity_status ? row.opportunity_status.toLowerCase() : '';
+        const formattedOppStatus = oppStatus 
+          ? oppStatus.charAt(0).toUpperCase() + oppStatus.slice(1)
+          : '—';
+          
+        let oppStatusColor = '#f3f4f6'; 
+        let oppTextColor = '#fdfffa'; 
+        
+        if (oppStatus === 'qualified') {
+          oppStatusColor = '#00b146';
+          oppTextColor = '#fdfffa';
+        } else if (oppStatus === 'lost') {
+          oppStatusColor = '#cf2c3a';
+          oppTextColor = '#fdfffa';
+        } else if (oppStatus === 'won') {
+          oppStatusColor = '#FFA300';
+          oppTextColor = '#fdfffa';
+        } else if (oppStatus === 'open') {
+          oppStatusColor = '#1979FE';
+          oppTextColor = '#fdfffa';
         }
           
         html += `
           <tr>
             <td style="text-align: center;">${row.lead_id ? 'L' + String(row.lead_id).padStart(3, '0') : '—'}</td>
-            <td style="text-align: center;">${row.opportunity_id ? 'O' + String(row.opportunity_id).padStart(3, '0') : '—'}</td>
             <td style="text-align: center;">${row.source || '—'}</td>
             <td style="text-align: center;"><span style="background-color: ${statusColor}; color: ${textColor}; padding: 4px 8px; border-radius: 7px; font-size: 11px; font-weight: 600; display: inline-block; width: 80px; text-align: center;">${formattedStatus}</span></td>
             <td style="text-align: center;">${row.created_at ? new Date(row.created_at).toISOString().split('T')[0] : '—'}</td>
+            <td style="text-align: center;">${row.opportunity_id ? 'O' + String(row.opportunity_id).padStart(3, '0') : '—'}</td>
+            <td style="text-align: center;">${row.potential_value ? '$' + row.potential_value : '—'}</td>
+            <td style="text-align: center;"><span style="background-color: ${oppStatusColor}; color: ${oppTextColor}; padding: 4px 8px; border-radius: 7px; font-size: 11px; font-weight: 600; display: inline-block; width: 80px; text-align: center;">${formattedOppStatus}</span></td>
+            <td style="text-align: center;">${row.expected_close_date ? new Date(row.expected_close_date).toISOString().split('T')[0] : '—'}</td>
             <td>
               <div class="table-actions">
                 <!-- View Button -->
@@ -664,20 +866,14 @@
       document.getElementById('output').innerHTML = html;
     }
 
-    // Navigation function
-    window.navigateToPage = function() {
-      const selectedValue = document.getElementById("lo").value;
-      if (selectedValue) {
-        window.location.href = selectedValue;
-      }
-    };
-
-    // Search filter
+         // Search filter
     window.filterLeads = function(keyword) {
       const filtered = window.salesLeads.filter(row =>
         row.customer_name.toLowerCase().includes(keyword.toLowerCase()) ||
         row.source.toLowerCase().includes(keyword.toLowerCase()) ||
-        row.status.toLowerCase().includes(keyword.toLowerCase())
+        row.status.toLowerCase().includes(keyword.toLowerCase()) ||
+        (row.opportunity_status && row.opportunity_status.toLowerCase().includes(keyword.toLowerCase())) ||
+        (row.potential_value && row.potential_value.toString().includes(keyword))
       );
       renderLeadTable(filtered);
     };
@@ -694,40 +890,180 @@
       document.getElementById("customerModal").style.display = "none";
     };
 
-    window.saveCustomer = async function() {
-      const mode = document.getElementById("customerModal").dataset.mode;
-      const firstName = document.getElementById("modalFirstName").value;
-      const lastName = document.getElementById("modalLastName").value;
-      const email = document.getElementById("modalEmail").value;
-      const phone = document.getElementById("modalPhone").value;
+         window.saveCustomer = async function() {
+       const mode = document.getElementById("customerModal").dataset.mode;
+       const firstName = document.getElementById("modalFirstName").value;
+       const lastName = document.getElementById("modalLastName").value;
+       const email = document.getElementById("modalEmail").value;
+       const phone = document.getElementById("modalPhone").value;
 
-      if (mode === 'add') {
-        await sql`
-          INSERT INTO customers (business_id, first_name, last_name, email, phone, created_at)
-          VALUES (1, ${firstName}, ${lastName}, ${email}, ${phone}, NOW())
-        `;
-      } else {
-        await sql`
-          UPDATE customers
-          SET first_name=${firstName}, last_name=${lastName}, email=${email}, phone=${phone}
-          WHERE customer_id = (SELECT customer_id FROM customers ORDER BY customer_id DESC LIMIT 1)
-        `;
-      }
+       if (mode === 'add') {
+         await sql`
+           INSERT INTO customers (business_id, first_name, last_name, email, phone, created_at)
+           VALUES (1, ${firstName}, ${lastName}, ${email}, ${phone}, NOW())
+         `;
+       } else {
+         const customerId = document.getElementById("customerModal").dataset.customerId;
+         if (customerId) {
+           await sql`
+             UPDATE customers
+             SET first_name=${firstName}, last_name=${lastName}, email=${email}, phone=${phone}
+             WHERE customer_id = ${customerId}
+           `;
+         }
+       }
 
-      closeModal();
-      fetchAllLeads(); 
-    };
+       closeModal();
+       fetchAllLeads(); 
+     };
 
-    // Placeholder functions for actions
-    window.viewCustomer = function(customerId) {
-      console.log('View customer:', customerId);
-      // Implement view functionality
-    };
+         // View customer function
+     window.viewCustomer = function(customerId) {
+       const customer = window.salesLeads.find(row => row.customer_id === customerId);
+       if (customer) {
+         const content = `
+           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+             <div>
+               <h3 style="margin-bottom: 1rem; color: #374151; font-size: 16px; font-weight: 600;">Customer Information</h3>
+               <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Name</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.customer_name}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Lead ID</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">L${String(customer.lead_id).padStart(3, '0')}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Source</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.source || 'N/A'}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Status</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.status || 'N/A'}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Created</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.created_at ? new Date(customer.created_at).toISOString().split('T')[0] : 'N/A'}</p>
+                 </div>
+               </div>
+             </div>
+             <div>
+               <h3 style="margin-bottom: 1rem; color: #374151; font-size: 16px; font-weight: 600;">Opportunity Information</h3>
+               <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Opportunity ID</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.opportunity_id ? 'O' + String(customer.opportunity_id).padStart(3, '0') : 'N/A'}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Potential Value</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.potential_value ? '$' + customer.potential_value : 'N/A'}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Opp Status</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.opportunity_status || 'N/A'}</p>
+                 </div>
+                 <div>
+                   <label style="display: block; margin-bottom: 0.25rem; color: #6B7280; font-size: 12px; font-weight: 500;">Expected Close</label>
+                   <p style="margin: 0; color: #374151; font-size: 14px; font-weight: 500;">${customer.expected_close_date ? new Date(customer.expected_close_date).toISOString().split('T')[0] : 'N/A'}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         `;
+         
+         document.getElementById('viewCustomerContent').innerHTML = content;
+         document.getElementById('viewCustomerModal').style.display = 'flex';
+       }
+     };
 
-    window.editCustomer = function(customerId) {
-      console.log('Edit customer:', customerId);
-      // Implement edit functionality
-    };
+           // Edit customer function
+      window.editCustomer = function(customerId) {
+        const customer = window.salesLeads.find(row => row.customer_id === customerId);
+        if (customer) {
+          // First, fetch the complete customer data from the database
+          window.fetchCustomerDetails(customerId).then(customerDetails => {
+            if (customerDetails) {
+          // Populate edit modal with customer data
+          document.getElementById("editCustomerId").value = 'C' + String(customer.customer_id).padStart(3, '0');
+              document.getElementById("editFirstName").value = customerDetails.first_name || '';
+              document.getElementById("editPhone").value = customerDetails.phone_number || '';
+                             document.getElementById("editRegistrationDate").value = customerDetails.registration_date && typeof customerDetails.registration_date === 'string' ? customerDetails.registration_date.split('T')[0] : '';
+              document.getElementById("editContactMethod").value = customerDetails.preferred_contact_method || 'phone';
+              document.getElementById("editEmail").value = customerDetails.email || '';
+              document.getElementById("editLastName").value = customerDetails.last_name || '';
+              document.getElementById("editAddress").value = customerDetails.address || '';
+              document.getElementById("editGender").value = customerDetails.gender || 'male';
+              document.getElementById("editStatus").value = customerDetails.customer_status || 'active';
+              document.getElementById("editCreatedBy").value = customerDetails.account_created_by || '';
+          
+          // Store the customer ID for update
+          document.getElementById("editCustomerModal").dataset.customerId = customerId;
+          document.getElementById("editCustomerModal").dataset.leadId = customer.lead_id;
+          document.getElementById("editCustomerModal").dataset.opportunityId = customer.opportunity_id;
+          
+          // Open edit modal
+          document.getElementById('editCustomerModal').style.display = 'flex';
+            }
+          }).catch(error => {
+            console.error('Error fetching customer details:', error);
+            alert('Error loading customer details. Please try again.');
+          });
+        }
+      };
+
+
+
+     // Close view modal
+     window.closeViewModal = function() {
+       document.getElementById('viewCustomerModal').style.display = 'none';
+     };
+
+     // Close edit modal
+     window.closeEditModal = function() {
+       document.getElementById('editCustomerModal').style.display = 'none';
+     };
+
+           // Save edited customer
+      window.saveEditCustomer = async function() {
+        const customerId = document.getElementById("editCustomerModal").dataset.customerId;
+        
+        const firstName = document.getElementById("editFirstName").value;
+        const lastName = document.getElementById("editLastName").value;
+        const email = document.getElementById("editEmail").value;
+        const phone = document.getElementById("editPhone").value;
+        const address = document.getElementById("editAddress").value;
+        const registrationDate = document.getElementById("editRegistrationDate").value;
+        const contactMethod = document.getElementById("editContactMethod").value;
+        const gender = document.getElementById("editGender").value;
+        const status = document.getElementById("editStatus").value;
+        const createdBy = document.getElementById("editCreatedBy").value;
+
+        try {
+          // Update customer with all available fields
+          await sql`
+            UPDATE customers
+            SET 
+              first_name = ${firstName},
+              last_name = ${lastName},
+              email = ${email},
+              phone_number = ${phone},
+              address = ${address || null},
+              registration_date = ${registrationDate || null},
+              preferred_contact_method = ${contactMethod || null},
+              gender = ${gender || null},
+              customer_status = ${status || null},
+              account_created_by = ${createdBy || null}
+            WHERE customer_id = ${customerId}
+          `;
+
+          closeEditModal();
+          fetchAllLeads();
+        } catch (error) {
+          console.error('Error updating customer:', error);
+          alert('Error updating customer. Please try again.');
+        }
+      };
 
     // On page load
     window.onload = () => {
