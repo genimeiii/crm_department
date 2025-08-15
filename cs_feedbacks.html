@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Support</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: #fdfffa;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      padding-left: 20px;
+
+      background: linear-gradient(70deg, #cc79f0, #3e7ef7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      margin-left: 5px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .nav a,
+    .bottom a {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 20px;
+      color: #333135;
+      font-weight: 640;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 0 7px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .nav a:hover,
+    .bottom a:hover {
+      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav a.active {
+      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
+      color: #fdfffa;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: #fdfffa;
+      background-clip: unset;
+    }
+
+    .bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav svg,
+    .bottom svg {
+      stroke: #6B7280; 
+      transition: stroke 0.3s ease;
+    }
+
+    .nav a:hover svg,
+    .bottom a:hover svg {
+      stroke: #cc79f0; 
+    }
+
+    .nav a.active svg {
+      stroke: #ffffff;
+    }
+
+    /* --- Main Content Styling --- */
+    .main {
+      flex: 1;
+      padding: 2rem 3rem;
+      background-color: #fdfffa;
+      overflow-y: auto;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      margin-bottom: 1.5rem;
+      color: #333135;
+    }
+
+    .header-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      justify-content: flex-end;
+      margin-top: -70px; 
+      margin-bottom: 1rem;
+    }
+
+    .icon-bell {
+      width: 24px;
+      height: 24px;
+      stroke: #6b7280;
+      cursor: pointer;
+      transition: stroke 0.3s ease;
+    }
+
+    .icon-bell:hover {
+      stroke: #4b8efb;
+    }
+
+    .profile-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid #d1d5db;
+      transition: border-color 0.3s ease;
+    }
+
+    .profile-img:hover {
+      border-color: #4b8efb;
+    }
+
+    .top-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 2rem;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .select-container {
+      position: relative;
+      display: inline-block;
+      width: 200px; 
+    }
+
+    .select-container select {
+      width: 100%;
+      padding: 8px 36px 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      background-color: white;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+      min-width: 120px;
+      transition: border-color 0.2s;
+    }
+
+    .select-container select:hover,
+    .select-container select:focus {
+      border-color: #B3B3B3;
+    }
+
+    .arrow-down-icon {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: #333;
+      pointer-events: none;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #B3B3B3;
+      border-radius: 999px;
+      padding: 6px 12px;
+      width: 100%;
+      max-width: 400px;
+      background-color: #f9f9f9;
+      transition: border-color 0.2s;
+    }
+
+    .search-container:focus-within {
+      border-color: #B3B3B3;
+    }
+
+    .search-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      color: #B3B3B3;
+    }
+
+    .search-container input {
+      border: none;
+      outline: none;
+      width: 100%;
+      background: transparent;
+      font-size: 14px;
+    }
+
+    .icon-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      margin: 1rem 0 1rem auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      color: #4B5563;
+      font-weight: 600;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    #output {
+      background-color: #f8f8f8;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+      font-size: 14px;
+    }
+
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modal-box h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      color: #374151;
+    }
+
+    .modal-box input {
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+  </style>
+
+  <script type="module">
+    import { neon } from "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.7.0/+esm";
+    const connectionString = "postgresql://neondb_owner:npg_J1gloZUcFQS2@ep-still-truth-a1051s4o-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+    const sql = neon(connectionString);
+
+    async function fetchAllFeedbacks() {
+      try {
+        const result = await sql`
+          SELECT
+            f.feedback_id,
+            f.customer_id,
+            COALESCE(CONCAT(c.first_name, ' ', c.last_name), '—') AS customer,
+            f.comments,
+            f.rating,
+            f.feedback_date,
+            f.order_id
+          FROM user_feedback f
+          LEFT JOIN customers c ON f.customer_id = c.customer_id
+          ORDER BY f.feedback_id ASC
+        `;
+        window.feedbacks = result;
+        renderFeedbackTable(result);
+      } catch (err) {
+        document.getElementById('output').textContent = 'Error: ' + err.message;
+      }
+    }
+
+    // Render feedback table
+    function renderFeedbackTable(data) {
+      let html = `
+        <table>
+          <tr>
+            <th>Feedback ID</th>
+            <th>Customer ID</th>
+            <th>Customer</th>
+            <th>Order ID</th>
+            <th>Comments</th>
+            <th>Rating</th>
+            <th>Date</th>
+          </tr>
+      `;
+
+      for (const row of data) {
+        html += `
+          <tr>
+            <td>${row.feedback_id}</td>
+            <td>${row.customer_id ?? '—'}</td>
+            <td>${row.customer ?? '—'}</td>
+            <td>${row.order_id ?? '—'}</td>
+            <td>${row.comments ?? ''}</td>
+            <td>${row.rating ?? '—'}</td>
+            <td>${row.feedback_date ? new Date(row.feedback_date).toISOString().split('T')[0] : '—'}</td>
+          </tr>
+        `;
+      }
+
+      html += '</table>';
+      document.getElementById('output').innerHTML = html;
+    }
+
+    // Search filter
+    function filterFeedbacks(keyword) {
+      const filtered = window.feedbacks.filter(row =>
+        (row.customer ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
+        (row.comments ?? '').toLowerCase().includes(keyword.toLowerCase()) ||
+        String(row.rating ?? '').includes(keyword) ||
+        String(row.order_id ?? '').includes(keyword)
+      );
+      renderFeedbackTable(filtered);
+    }
+
+    // On page load
+    window.onload = () => {
+      fetchAllFeedbacks();
+
+      const searchInput = document.getElementById("searchInput");
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          filterFeedbacks(this.value);
+        });
+      }
+    };
+  </script>
+
+</head>
+  <body>
+  <div class="container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <img src="logo.png" alt="Logo" />
+        SkinBloom
+      </div>
+      <nav class="nav">
+        <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
+        <a href="customers_data.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg><span>Customers Data</span></a>
+        <a href="LO.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-search-icon lucide-user-search"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>Lead & Opportunity</a>
+        <a href="sales_order.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-dollar-sign-icon lucide-badge-dollar-sign"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>Sales Order</a>
+        <a href="quota.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-quote-icon lucide-text-quote"><path d="M17 6H3"/><path d="M21 12H8"/><path d="M21 18H8"/><path d="M3 12v6"/></svg>Quotations & Pricing</a>
+        <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>Customer Support</a>
+      </nav>
+    </div>
+    <div class="bottom">
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Logout</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <h1>Customer Support</h1>
+
+    <div class="header-icons">
+      <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+      </svg>
+      <img src="profile.jpg" alt="Profile" class="profile-img" />
+    </div>
+
+    <div class="top-controls">
+      <div class="select-container">
+        <select name="lo" id="lo" onchange="navigateToPage()">
+          <option value="cs_feedbacks.html">Feedbacks</option>
+          <option value="cs_tickets.html">Tickets</option>
+          <option value="cs_requests.html">Requests</option>
+        </select>
+        <svg class="arrow-down-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+
+      <script>
+        function navigateToPage() {
+          const selectedValue = document.getElementById("lo").value;
+          if (selectedValue) {
+            window.location.href = selectedValue;
+          }
+        }
+      </script>
+
+          <div class="search-container">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search"
+              oninput="filterCustomers()"
+            />
+          </div>
+        </div>
+
+        <div id="output">Loading...</div>
+      </main>
+    </div>
+
+    <!-- Modal HTML -->
+    <div id="customerModal" class="modal-overlay">
+      <div class="modal-box">
+        <h2 id="modalTitle">Add Customer</h2>
+        <input id="modalFirstName" placeholder="First Name">
+        <input id="modalLastName" placeholder="Last Name">
+        <input id="modalEmail" placeholder="Email">
+        <input id="modalPhone" placeholder="Phone">
+
+        <div class="modal-actions">
+          <button class="btn-add" onclick="saveCustomer()">Save</button>
+          <button class="btn-circle" onclick="closeModal()">✕</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

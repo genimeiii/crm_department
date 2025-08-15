@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skin Bloom CRM - Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #fff;
+      background: 
+        linear-gradient(rgba(45, 0, 54, 0.815), rgba(72, 1, 116, 0.74)),
+        url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      display: flex;
+      gap: 30px;
+      background: rgba(40, 0, 54, 0);
+      border-radius: 24px;
+      box-shadow: 0 40px 60px rgba(0, 0, 0, 0.532);
+      padding: 48px 64px;
+      align-items: center;
+      margin-left: 200px;
+      margin-right: 200px;
+    }
+    .welcome-box {
+      padding: 32px 36px;
+      min-width: 250px;
+    }
+    .welcome-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .welcome-logo img {
+      height: 55px;
+    }
+    .logoname {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2rem;
+        color: #ffffff;
+        vertical-align: middle;
+        padding-top: 10px;
+    }
+    .logo-subtitle {
+        font-family: 'Merriweather', serif;
+        font-size: 1rem;
+        color: #ffffff;
+        margin-left: 6px;
+        letter-spacing: 2px;
+        vertical-align: middle;
+        padding-top: 10px;
+    }
+
+    .welcome-title {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .welcome-divider {
+      width: 120px;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+      margin-bottom: 25px;
+    }
+    .welcome-desc {
+      font-size: 1rem;
+      margin-bottom: 28px;
+      color: #e0d9e6;
+    }
+    
+    .login-box {
+      background: rgba(237, 236, 239, 0.148);
+      border-radius: 18px;
+      padding: 32px 36px;
+      min-width: 330px;
+      box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.492);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .login-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .login-desc {
+      font-size: 1rem;
+      margin-bottom: 22px;
+      color: #e0d9e6;
+      text-align: center;
+    }
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .login-field {
+      position: relative;
+      width: 100%;
+    }
+    .login-field input {
+      width: 83%;
+      padding: 12px 40px 12px 16px;
+      border-radius: 20px;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 2px;
+    }
+    .login-field input::placeholder {
+      color: #d1cbe6;
+      font-size: 1rem;
+    }
+    .login-field .icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #d1cbe6;
+      font-size: 1.2rem;
+    }
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: #d1cbe6;
+    }
+    .login-options label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .login-options input[type="checkbox"] {
+      accent-color: #ff4e7a;
+    }
+    .login-forgot {
+      color: #ff4e7a;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .login-forgot:hover {
+      text-decoration: underline;
+    }
+    .login-submit {
+      width: 100%;
+      background: linear-gradient(90deg, #ff4e7a 0%, #ffb86c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    .login-submit:hover {
+      background: linear-gradient(90deg, #e13c65 0%, #ffb86c 100%);
+    }
+    
+    @media (max-width: 900px) {
+      .login-container {
+        flex-direction: column;
+        gap: 32px;
+        padding: 32px 16px;
+      }
+      .welcome-box, .login-box {
+        min-width: 260px;
+        padding: 24px 16px;
+      }
+    }
+
+    /* Modal Styles */
+    .custom-modal {
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(45, 0, 54, 0.459);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: #ffffff;
+      color: #333;
+      padding: 32px 40px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      text-align: center;
+      position: relative;
+      min-width: 300px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px; right: 18px;
+      font-size: 2rem;
+      color: #333;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="login-container">
+    <div class="welcome-box">
+      <div class="welcome-logo">
+        <img src="logo.png" alt="Skin Bloom Logo">
+        <span class="logoname">Skin Bloom</span><span class="logo-subtitle">- CRM</span>
+      </div>
+      <div class="welcome-title">Welcome!</div>
+      <div class="welcome-divider"></div>
+      <div class="welcome-desc">
+        <b>Skin Bloom</b> is a growing online store dedicated to offering high-quality self-care, beauty, and lifestyle products tailored to the modern customer. We focus on delivering not just products, but a complete customer experience — from personalized recommendations to responsive after-sales support. Our goal is to empower confidence, style, and well-being in every order.
+      </div>
+    </div>
+    <div class="login-box">
+      <div class="login-title">Sign in</div>
+      <div class="login-desc">Please enter your details.</div>
+      <form class="login-form">
+        <div class="login-field">
+          <input type="text" placeholder="username" required id="username-input">
+        </div>
+        <div class="login-field">
+            <input type="password" placeholder="Password" required id="password-input">
+            <span class="icon" id="toggle-password" style="cursor:pointer;">
+            <img src="eye.png" alt="Show Password" id="eye-icon" style="height:15px;">
+            </span>
+        </div>
+        <div class="login-options">
+          <label><input type="checkbox"> Remember</label>
+          <a href="#" class="login-forgot">forgot password?</a>
+        </div>
+        <button type="submit" class="login-submit">Log in</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+    <div id="success-modal" style="display:none;" class="custom-modal">
+      <div class="modal-content success">
+        <img src="check.png" alt="Success" style="height: 80px; weight: 80px; margin-bottom: 10px;">
+        <span class="close-btn" onclick="closeModal('success-modal')">&times;</span>
+        <h2>Login Successful!</h2>
+        <p>Welcome back!</p>
+      </div>
+    </div>
+
+  <!-- Failure Modal -->
+    <div id="fail-modal" style="display:none;" class="custom-modal">
+      <div class="modal-content fail">
+        <img src="x1.png" alt="Success" style="height: 80px; weight: 80px; margin-bottom: 10px;">
+        <span class="close-btn" onclick="closeModal('fail-modal')">&times;</span>
+        <h2>Login Failed</h2>
+        <p id="fail-message">Invalid credentials.</p>
+      </div>
+    </div>
+
+<script>
+    
+// Toggle password visibility
+    const passwordInput = document.getElementById('password-input');
+    const togglePassword = document.getElementById('toggle-password');
+    const eyeIcon = document.getElementById('eye-icon');
+    let passwordVisible = false;
+
+    togglePassword.onclick = function() {
+        passwordVisible = !passwordVisible;
+        passwordInput.type = passwordVisible ? 'text' : 'password';
+        eyeIcon.src = passwordVisible ? 'eyeslash.png' : 'eye.png';
+        eyeIcon.alt = passwordVisible ? 'Hide Password' : 'Show Password';
+    };
+
+    // Handle form submission
+    document.querySelector('.login-form').onsubmit = async function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username-input').value;
+        const password = document.getElementById('password-input').value;
+
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const result = await response.json();
+        if (result.success) {
+            alert('Login successful!');
+            window.location.href = 'dashboard.html';
+        } else {
+            alert(result.message || 'Login failed!');
+        }
+    };
+
+    // Show success modal
+    function showModal(id) {
+    document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    document.querySelector('.login-form').onsubmit = async function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username-input').value;
+        const password = document.getElementById('password-input').value;
+
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const result = await response.json();
+        if (result.success) {
+            showModal('success-modal');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 2000); // Redirect after 2 seconds
+        } else {
+            document.getElementById('fail-message').textContent = result.message || 'Login failed!';
+            showModal('fail-modal');
+        }
+    };
+
+  // Remember username if checkbox is checked
+    window.onload = function() {
+      const remembered = localStorage.getItem('rememberedUsername');
+      if (remembered) {
+        document.getElementById('username-input').value = remembered;
+        document.querySelector('.login-options input[type="checkbox"]').checked = true;
+      }
+    };
+
+    function showModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    document.querySelector('.login-form').onsubmit = async function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username-input').value;
+        const password = document.getElementById('password-input').value;
+        const remember = document.querySelector('.login-options input[type="checkbox"]').checked;
+
+        // Store username if "Remember" is checked, else remove it
+        if (remember) {
+          localStorage.setItem('rememberedUsername', username);
+        } else {
+          localStorage.removeItem('rememberedUsername');
+        }
+
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const result = await response.json();
+        if (result.success) {
+            showModal('success-modal');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1500);
+        } else {
+            document.getElementById('fail-message').textContent = result.message || 'Login failed!';
+            showModal('fail-modal');
+        }
+    };
+
+  </script>
+</body>
+</html>
