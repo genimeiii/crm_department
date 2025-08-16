@@ -269,6 +269,142 @@
       font-weight: 600;
       border-bottom: 1px solid #E5E7EB;
     }
+    /*status*/
+    .status-badge {
+      display: block;
+      padding: 4px 8px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fdfffa;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .status-pending {
+      background-color: #f59e0b;
+    }
+
+    .status-approved {
+      background-color: #4ade80;
+    }
+
+    .status-rejected {
+      background-color: #cf2c3a;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .btn-add {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #9b8cfb, #3799fb);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(90deg, #8b7cfb, #318af7);
+    }
+
+    .btn-add .icon {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+    }
+
+    .btn-circle {
+      width: 42px;
+      height: 42px;
+      background-color: #f1f1f5;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-circle:hover {
+      background-color: #e0e0eb;
+    }
+
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .action-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: #6b7280;
+      transition: stroke 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #f1f1f5;
+    }
+
+    .action-btn:hover svg {
+      stroke: #4b8efb;
+    }
+
+    /* Action buttons in table */
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .action-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: #6b7280;
+      transition: stroke 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #f1f1f5;
+    }
+
+    .action-btn:hover svg {
+      stroke: #4b8efb;
+    }
 
     #output {
       background-color: #f8f8f8;
@@ -287,6 +423,7 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
+      padding: 2rem;
     }
 
     .modal-box {
@@ -298,20 +435,27 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      max-height: 80vh;  
+      overflow-y: auto;
     }
 
     .modal-box h2 {
       font-family: 'Poppins', sans-serif;
       font-size: 20px;
       color: #374151;
+      grid-column: span 2;
     }
 
-    .modal-box input {
+    .modal-box input,
+    .modal-box select,
+    .modal-box textarea {
       padding: 10px;
       border: 1px solid #d1d5db;
       border-radius: 8px;
       font-size: 14px;
       font-family: 'Inter', sans-serif;
+      width: 100%;     
+      min-width: 0; 
     }
 
     .modal-actions {
@@ -332,6 +476,8 @@
       if (isNaN(d.getTime())) return ''; // Invalid date check
       return d.toISOString().split('T')[0]; // YYYY-MM-DD
     }
+
+    let currentEditId = null;
 
     // Fetch all quotations with customer and product info
     async function fetchAllQuotations() {
@@ -360,7 +506,6 @@
     function renderQuotationTable(data) {
       let html = `
         <table>
-          
           <tr>
             <th>Quota ID</th>
             <th>Customer ID</th>
@@ -370,10 +515,17 @@
             <th>Total Amount</th>
             <th>Status</th>
             <th>Updated At</th>
+            <th style="text-align:right;">Actions</th>
           </tr>
       `;
 
       for (const row of data) {
+        const status = (row.status || '').toLowerCase();
+        let statusClass = '';
+        if ( status === 'pending') statusClass = 'status-badge status-pending';
+        else if (status === 'approved') statusClass = 'status-badge status-approved';
+        else if (status === 'rejected') statusClass = 'status-badge status-rejected';
+
         html += `
           <tr>
             <td>${row.quotation_id ? 'Q' + String(row.quotation_id).padStart(3, '0') : ''}</td>
@@ -382,8 +534,31 @@
             <td>${row.opportunity_id ? 'O' + String(row.opportunity_id).padStart(3, '0') : ''}</td>
             <td>${formatDate(row.quotation_date)}</td>
             <td>₱ ${Number(row.total_amount).toFixed(2)}</td>
-            <td>${row.status ?? ''}</td>
+            <td><span class="${statusClass}">${
+                row.status
+                ? row.status.charAt(0).toUpperCase() + row.status.slice(1).toLowerCase()
+                : '—'
+            }</span></td>
             <td>${formatDate(row.updated_at)}</td>
+          
+          <td>
+              <div class="table-actions">
+                <!-- View Button -->
+                <button class="action-btn" onclick="viewQuotation(${row.quotation_id})" title="View">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
+
+                <!-- Edit Button -->
+                <button class="action-btn" onclick="editQuotation(${row.quotation_id})" title="Edit">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652l-1.688 1.687m-2.651-2.651L6.478 16.22a4.5 4.5 0 00-1.12 1.873l-.622 2.49a.375.375 0 00.465.465l2.49-.622a4.5 4.5 0 001.873-1.12l10.386-10.387m-2.651-2.651l2.651 2.651" />
+                  </svg>
+                </button>
+              </div>
+            </td>
           </tr>
         `;
       }
@@ -395,34 +570,99 @@
     // Search filter
     function filterQuotations(keyword) {
       const filtered = window.quotationData.filter(row =>
-        row.customer_name.toLowerCase().includes(keyword.toLowerCase()) ||
-        row.name.toLowerCase().includes(keyword.toLowerCase())
+        String(row.customer_id).toLowerCase().includes(keyword.toLowerCase()) ||
+        (row.status && row.status.toLowerCase().includes(keyword.toLowerCase()))
       );
       renderQuotationTable(filtered);
     }
 
     // Modal handling
     window.openModal = function () {
-      const modal = document.getElementById("customerModal");
-      modal.style.display = "flex";
-    };
+    currentEditId = null; // Reset for new
+    const modal = document.getElementById("customerModal");
+    document.getElementById("modalTitle").textContent = "New Quotation";
+    document.getElementById("quotationForm").reset();
+    document.getElementById("modalStatus").disabled = false;
+    document.querySelectorAll("#customerModal input").forEach(input => input.disabled = false);
+    document.getElementById("modalSaveBtn").style.display = "";
+    modal.style.display = "flex";
+};
 
     window.closeModal = function () {
       document.getElementById("customerModal").style.display = "none";
     };
 
+    // View Quotation
+    window.viewQuotation = function(id){
+        const quotation = window.quotationData.find(q => q.quotation_id === id);
+        if (!quotation) return;
+
+        const modal = document.getElementById("customerModal");
+        document.getElementById("modalTitle").textContent = "View Quotation";
+
+        document.getElementById("modalCustomerId").value = quotation.customer_id;
+        document.getElementById("modalTotalAmount").value = quotation.total_amount;
+        document.getElementById("modalStatus").value = quotation.status;
+        document.getElementById("modalStatus").disabled = true;
+
+        document.querySelectorAll("#customerModal input").forEach(input => input.disabled = true);
+        document.getElementById("modalSaveBtn").style.display = "none";
+        modal.style.display = "flex";
+    };
+
+    // Edit Quotation
+        window.editQuotation = function(id) {
+          currentEditId = id; // Track which row is being edited
+            const quotation = window.quotationData.find(q => q.quotation_id === id);
+            if (!quotation) return;
+
+        const modal = document.getElementById("customerModal");
+        document.getElementById("modalTitle").textContent = "Edit Quotation";
+
+        document.getElementById("modalCustomerId").value = quotation.customer_id;
+        document.getElementById("modalTotalAmount").value = quotation.total_amount;
+        document.getElementById("modalStatus").value = quotation.status;
+        document.getElementById("modalStatus").disabled = false;
+
+        document.querySelectorAll("#customerModal input").forEach(input => input.disabled = false);
+        document.getElementById("modalSaveBtn").style.display = "";
+        modal.style.display = "flex";
+    };
+
+    //Save Quotation
     window.saveQuotation = async function () {
       const customerId = document.getElementById("modalCustomerId").value;
-      const productId = document.getElementById("modalProductId").value;
-      const price = document.getElementById("modalPrice").value;
+      const totalAmount = document.getElementById("modalTotalAmount").value;
+      const status = document.getElementById("modalStatus").value;
 
-      await sql`
-        INSERT INTO quotations (customer_id, product_id, price, created_at)
-        VALUES (${customerId}, ${productId}, ${price}, NOW())
-      `;
+      if (!customerId || !totalAmount || !status) {
+        alert("Please fill out all fields.");
+        return;
+      }
 
-      closeModal();
-      fetchAllQuotations(); 
+      try {
+        if (currentEditId) {
+          // UPDATE existing row
+          await sql`
+            UPDATE quotation_history
+            SET customer_id = ${customerId},
+                total_amount = ${totalAmount},
+                status = ${status},
+                updated_at = NOW()
+            WHERE quotation_id = ${currentEditId}
+          `;
+        } else {
+          // INSERT new row
+          await sql`
+            INSERT INTO quotation_history (customer_id, status, total_amount, created_at)
+            VALUES (${customerId}, ${status}, ${totalAmount}, NOW())
+          `;
+        }
+        closeModal();
+        fetchAllQuotations(); 
+      } catch (err) {
+        alert("Failed to save: " + err.message);
+      }
     };
 
     // On page load
@@ -503,7 +743,7 @@
             type="text"
             id="searchInput"
             placeholder="Search"
-            oninput="filterCustomers()"
+            oninput="filterQuotations(this.value)"
           />
         </div>
       </div>
@@ -516,15 +756,30 @@
   <!-- Quotation Modal -->
   <div id="customerModal" class="modal-overlay">
     <div class="modal-box">
-      <h2 id="modalTitle">Add Quotation</h2>
-      <input id="modalCustomerId" placeholder="Customer ID">
-      <input id="modalProductId" placeholder="Product ID">
-      <input id="modalPrice" placeholder="Price" type="number">
-
-      <div class="modal-actions">
-        <button class="btn-add" onclick="saveQuotation()">Save</button>
-        <button class="btn-circle" onclick="closeModal()">✕</button>
-      </div>
+      <h2 id="modalTitle">Quotation</h2>
+      <form id="quotationForm" onsubmit="event.preventDefault(); saveQuotation();">
+        <div>
+          <label for="modalCustomerId">Customer Id</label>
+          <input id="modalCustomerId" type="number" required>
+        </div>
+        <div>
+          <label for="modalTotalAmount">Total Amount</label>
+          <input id="modalTotalAmount" type="number" step="0.01" required>
+        </div>
+        <div>
+          <label for="modalStatus">Status</label>
+          <select id="modalStatus" required>
+            <option value="">Select Status</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-add" id="modalSaveBtn" type="submit">Save</button>
+          <button class="btn-circle" type="button" onclick="closeModal()">✕</button>
+        </div>
+      </form>
     </div>
   </div>
 
