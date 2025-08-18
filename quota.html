@@ -5,542 +5,93 @@
   <title>Quotation & Pricing</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
-  
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-
-    .container {
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .sidebar {
-      width: 240px;
-      background-color: #fdfffa;
-      padding: 20px 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      font-weight: 500;
-      font-size: 1.5rem;
-      margin-bottom: 30px;
-      padding-left: 20px;
-
-      background: linear-gradient(70deg, #cc79f0, #3e7ef7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .logo img {
-      height: 40px;
-      width: auto;
-      object-fit: contain;
-      margin-left: 5px;
-    }
-
-    .logo .logoname {
-      font-family: 'Great Vibes', cursive;
-      font-weight: 600;
-      color: #333135;
-      padding-top: 10px;
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .nav a,
-    .bottom a {
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 20px;
-      color: #333135;
-      font-weight: 640;
-      text-decoration: none;
-      border-radius: 8px;
-      margin: 0 7px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .nav a:hover,
-    .bottom a:hover {
-      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav a.active {
-      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
-      color: #fdfffa;
-      -webkit-background-clip: unset;
-      -webkit-text-fill-color: #fdfffa;
-      background-clip: unset;
-    }
-
-    .bottom {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .nav svg,
-    .bottom svg {
-      stroke: #6B7280; 
-      transition: stroke 0.3s ease;
-    }
-
-    .nav a:hover svg,
-    .bottom a:hover svg {
-      stroke: #cc79f0; 
-    }
-
-    .nav a.active svg {
-      stroke: #ffffff;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Segoe UI', Arial, sans-serif; }
+    .container { display: flex; height: 100vh; overflow: hidden; }
+    .sidebar { width: 240px; background-color: #fdfffa; padding: 20px 0; display: flex; flex-direction: column; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1.5rem; margin-bottom: 30px; padding-left: 20px; background: linear-gradient(70deg, #cc79f0, #3e7ef7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+    .logo img { height: 40px; width: auto; object-fit: contain; margin-left: 5px; }
+    .logo .logoname { font-family: 'Great Vibes', cursive; font-weight: 600; color: #333135; padding-top: 10px; }
+    .nav { display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
+    .nav a, .bottom a { font-size: 14px; display: flex; align-items: center; gap: 12px; padding: 11px 20px; color: #333135; font-weight: 640; text-decoration: none; border-radius: 8px; margin: 0 7px; transition: background-color 0.3s, color 0.3s; }
+    .nav a:hover, .bottom a:hover { background: linear-gradient(90deg, #cc79f0, #3e7ef7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav a.active { background: linear-gradient(90deg, #cc79f0, #3e7ef7); color: #fdfffa; -webkit-background-clip: unset; -webkit-text-fill-color: #fdfffa; background-clip: unset; }
+    .bottom { margin-top: auto; display: flex; flex-direction: column; }
+    .nav svg, .bottom svg { stroke: #6B7280; transition: stroke 0.3s ease; }
+    .nav a:hover svg, .bottom a:hover svg { stroke: #cc79f0; }
+    .nav a.active svg { stroke: #ffffff; }
 
     /* --- Main Content Styling --- */
-    .main {
-      flex: 1;
-      padding: 2rem 3rem;
-      background-color: #fdfffa;
-      overflow-y: auto;
-      font-family: 'Quicksand', sans-serif;
-    }
+    .main { flex: 1; padding: 2rem 3rem; background-color: #fdfffa; overflow-y: auto; font-family: 'Quicksand', sans-serif; padding-top: 0.5rem; }
+    .top-bar { display: flex; align-items: center; gap: 18px; margin-bottom: 2rem; margin-top: 0.5rem; }
+    .top-bar .page-title { margin: 0; font-size: 26px; font-family: 'Poppins', sans-serif; color: #333135; flex-shrink: 0; }
+    .select-container, .search-container { flex-shrink: 0; }
+    .header-icons { margin-left: auto; display: flex; align-items: center; gap: 1.5rem; }
+    .icon-bell { width: 24px; height: 24px; stroke: #6b7280; cursor: pointer; transition: stroke 0.3s ease; }
+    .icon-bell:hover { stroke: #4b8efb; }
+    .profile-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #d1d5db; transition: border-color 0.3s ease; }
+    .profile-img:hover { border-color: #4b8efb; }
 
-    h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 26px;
-      margin-bottom: 1.5rem;
-      color: #333135;
-    }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background-color: #fdfffa;
-      padding: 1rem 3rem;
+    .select-container { position: relative; display: inline-block; width: 200px; }
+    .select-container select { width: 100%; padding: 8px 36px 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; background-color: white; appearance: none; outline: none; cursor: pointer; min-width: 120px; transition: border-color 0.2s; }
+    .select-container select:hover, .select-container select:focus { border-color: #B3B3B3; }
+    .arrow-down-icon { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); width: 16px; height: 16px; stroke: #333; pointer-events: none; }
+    .top-controls {display: flex; align-items: center; gap: 18px; margin-bottom: 1.5rem; margin-top: 1.5rem;}
+    
+    .top-bar {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
+      margin-bottom: 0.5rem;
     }
 
-    .page-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 26px;
-      color: #333135;
-      margin: 0;
-    }
+    .horizontal-line {
+            height: 1px;
+            background-color: #E5E7EB;
+            width: 90%;
+            margin: 0 auto;
+            opacity: 0.4;
+          }
+    .search-container { display: flex; align-items: center; border: 1px solid #B3B3B3; border-radius: 999px; padding: 6px 12px; width: 100%; max-width: 400px; background-color: #f9f9f9; transition: border-color 0.2s; }
+    .search-container:focus-within { border-color: #B3B3B3; }
+    .search-icon { width: 18px; height: 18px; margin-right: 8px; color: #B3B3B3; }
+    .search-container input { border: none; outline: none; width: 100%; background: transparent; font-size: 14px; }
 
-    /* --- Profile modal --- */
-    .header-icons {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      justify-content: flex-end;
-    }
-
-    .profile-dropdown {
-      display: none;
-      position: absolute;
-      top: 42px;
-      right: 0;
-      min-width: 260px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-      padding: 18px 22px 18px 22px;
-      z-index: 100;
-      flex-direction: row;
-      align-items: center;
-      gap: 18px;
-      border: 1px solid #eee;
-    }
-    .profile-dropdown.show {
-      display: flex;
-      animation: fadeIn 0.18s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .profile-dropdown-img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 12px;
-      border: 2px solid #b16cea;
-    }
-    .profile-dropdown-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .profile-dropdown-info #profile-name {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 2px;
-    }
-    .profile-dropdown-info #profile-email {
-      color: #666;
-      font-size: 0.95rem;
-      margin-bottom: 2px;
-    }
-    .profile-dropdown-info #profile-role {
-      color: #b16cea;
-      font-size: 0.93rem;
-      font-weight: 500;
-    }
-
-    .icon-bell {
-      width: 24px;
-      height: 24px;
-      stroke: #6b7280;
-      cursor: pointer;
-      transition: stroke 0.3s ease;
-    }
-
-    .icon-bell:hover {
-      stroke: #4b8efb;
-    }
-
-    .profile-img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-      border: 2px solid #d1d5db;
-      transition: border-color 0.3s ease;
-    }
-
-    .profile-img:hover {
-      border-color: #4b8efb;
-    }
-
-    .top-controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 2rem;
-      align-items: center;
-      padding: 10px;
-    }
-
-    .select-container {
-      position: relative;
-      display: inline-block;
-      width: 200px; 
-    }
-
-    .select-container select {
-      width: 100%;
-      padding: 8px 36px 8px 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      background-color: white;
-      appearance: none;
-      outline: none;
-      cursor: pointer;
-      min-width: 120px;
-      transition: border-color 0.2s;
-    }
-
-    .select-container select:hover,
-    .select-container select:focus {
-      border-color: #B3B3B3;
-    }
-
-    .arrow-down-icon {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
-      stroke: #333;
-      pointer-events: none;
-    }
-
-    .search-container {
-      display: flex;
-      align-items: center;
-      border: 1px solid #B3B3B3;
-      border-radius: 999px;
-      padding: 6px 12px;
-      width: 100%;
-      max-width: 400px;
-      background-color: #f9f9f9;
-      transition: border-color 0.2s;
-    }
-
-    .search-container:focus-within {
-      border-color: #B3B3B3;
-    }
-
-    .search-icon {
-      width: 18px;
-      height: 18px;
-      margin-right: 8px;
-      color: #B3B3B3;
-    }
-
-    .search-container input {
-      border: none;
-      outline: none;
-      width: 100%;
-      background: transparent;
-      font-size: 14px;
-    }
-
-    .icon-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      align-items: center;
-      width: 100%;
-      margin: 1rem 0 1rem auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.5rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-    }
-
-    th, td {
-      padding: 8px 10px;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    th {
-      color: #4B5563;
-      font-weight: 600;
-      border-bottom: 1px solid #E5E7EB;
-    }
-    /*status*/
-    .status-badge {
-      display: block;
-      padding: 4px 8px;
-      border-radius: 7px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #fdfffa;
-      letter-spacing: 0.5px;
-      text-align: center;
-    }
-
-    .status-pending {
-      background-color: #f59e0b;
-    }
-
-    .status-approved {
-      background-color: #4ade80;
-    }
-
-    .status-rejected {
-      background-color: #cf2c3a;
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .btn-add {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(90deg, #9b8cfb, #3799fb);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 9999px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .btn-add:hover {
-      background: linear-gradient(90deg, #8b7cfb, #318af7);
-    }
-
-    .btn-add .icon {
-      width: 18px;
-      height: 18px;
-      stroke: white;
-    }
-
-    .btn-circle {
-      width: 42px;
-      height: 42px;
-      background-color: #f1f1f5;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .btn-circle:hover {
-      background-color: #e0e0eb;
-    }
-
-
-    .action-btn {
-      width: 32px;
-      height: 32px;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.2s ease;
-    }
-
-    .action-btn svg {
-      width: 18px;
-      height: 18px;
-      stroke: #6b7280;
-      transition: stroke 0.2s ease;
-    }
-
-    .action-btn:hover {
-      background-color: #f1f1f5;
-    }
-
-    .action-btn:hover svg {
-      stroke: #4b8efb;
-    }
-
-    /* Action buttons in table */
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .action-btn {
-      width: 32px;
-      height: 32px;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.2s ease;
-    }
-
-    .action-btn svg {
-      width: 18px;
-      height: 18px;
-      stroke: #6b7280;
-      transition: stroke 0.2s ease;
-    }
-
-    .action-btn:hover {
-      background-color: #f1f1f5;
-    }
-
-    .action-btn:hover svg {
-      stroke: #4b8efb;
-    }
-
-    #output {
-      background-color: #f8f8f8;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
-      font-size: 14px;
-    }
-
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 2rem;
-    }
-
-    .modal-box {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 500px;
-      width: 90%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-height: 80vh;  
-      overflow-y: auto;
-    }
-
-    .modal-box h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 20px;
-      color: #374151;
-      grid-column: span 2;
-    }
-
-    .modal-box input,
-    .modal-box select,
-    .modal-box textarea {
-      padding: 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-      width: 100%;     
-      min-width: 0; 
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
+    .icon-buttons { display: flex; gap: 1rem; justify-content: flex-end; align-items: center; width: 100%; margin: 1rem 0 1rem auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-family: 'Inter', sans-serif; font-size: 13px; }
+    th, td { padding: 8px 10px; text-align: left; font-size: 13px; }
+    th { color: #4B5563; font-weight: 600; border-bottom: 1px solid #E5E7EB; }
+    .status-badge { display: block; padding: 4px 8px; border-radius: 7px; font-size: 13px; font-weight: 600; color: #fdfffa; letter-spacing: 0.5px; text-align: center; }
+    .status-pending { background-color: #f59e0b; }
+    .status-approved { background-color: #4ade80; }
+    .status-rejected { background-color: #cf2c3a; }
+    .table-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-add { display: flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #9b8cfb, #3799fb); color: white; border: none; padding: 10px 20px; border-radius: 9999px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.3s ease; }
+    .btn-add:hover { background: linear-gradient(90deg, #8b7cfb, #318af7); }
+    .btn-add .icon { width: 18px; height: 18px; stroke: white; }
+    .btn-circle { width: 42px; height: 42px; background-color: #f1f1f5; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.3s ease; }
+    .btn-circle:hover { background-color: #e0e0eb; }
+    .action-btn { width: 32px; height: 32px; border: none; background-color: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease; }
+    .action-btn svg { width: 18px; height: 18px; stroke: #6b7280; transition: stroke 0.2s ease; }
+    .action-btn:hover { background-color: #f1f1f5; }
+    .action-btn:hover svg { stroke: #4b8efb; }
+    #output { background-color: #f8f8f8; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10); font-size: 14px; }
+    .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.4); display: none; align-items: center; justify-content: center; z-index: 999; padding: 2rem; }
+    .modal-box { background: #fff; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; display: flex; flex-direction: column; gap: 1rem; max-height: 80vh;  overflow-y: auto; }
+    .modal-box h2 { font-family: 'Poppins', sans-serif; font-size: 20px; color: #374151; grid-column: span 2; }
+    .modal-box input, .modal-box select, .modal-box textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; width: 100%; min-width: 0; }
+    .modal-actions { display: flex; justify-content: space-between; margin-top: 1rem; }
+    /* Profile Dropdown */
+    .profile-dropdown { display: none; position: absolute; top: 42px; right: 0; min-width: 260px; background: #fff; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.13); padding: 18px 22px 18px 22px; z-index: 100; flex-direction: row; align-items: center; gap: 18px; border: 1px solid #eee; }
+    .profile-dropdown.show { display: flex; animation: fadeIn 0.18s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
+    .profile-dropdown-img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; margin-right: 12px; border: 2px solid #b16cea; }
+    .profile-dropdown-info { display: flex; flex-direction: column; justify-content: center; }
+    .profile-dropdown-info #profile-name { font-weight: 600; font-size: 1.1rem; margin-bottom: 2px; }
+    .profile-dropdown-info #profile-email { color: #666; font-size: 0.95rem; margin-bottom: 2px; }
+    .profile-dropdown-info #profile-role { color: #b16cea; font-size: 0.93rem; font-weight: 500; }
 
     /* --- log out modal --- */
     .custom-modal {
@@ -589,9 +140,165 @@
     .confirm-btn:hover {
       background: linear-gradient(90deg, #ff4eaf 0%, #ffb86c 100%);
       color: #fff;
-    }
-    
+    }      
   </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo">
+          <img src="logo.png" alt="Logo"/></img>
+          <span class="logoname">Skin Bloom</span>
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
+          <a href="customers_data.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg><span>Customers Data</span></a>
+          <a href="LO.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-search-icon lucide-user-search"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>Lead & Opportunity</a>
+          <a href="sales_order.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-dollar-sign-icon lucide-badge-dollar-sign"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>Sales Order</a>
+          <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-quote-icon lucide-text-quote"><path d="M17 6H3"/><path d="M21 12H8"/><path d="M21 18H8"/><path d="M3 12v6"/></svg>Quotations & Pricing</a>
+          <a href="cs_tickets.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>Customer Support</a>
+        </nav>
+      </div>
+      <div class="bottom">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="top-bar">
+        <h1 class="page-title">Quotation & Pricing</h1>
+        <div class="header-icons">
+          <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+          </svg>
+          <div style="position:relative;">
+            <img src="profile.jpg" alt="Profile" class="profile-img" id="profile-btn" />
+            <div id="profile-dropdown" class="profile-dropdown">
+              <img src="profile.jpg" alt="Profile" class="profile-dropdown-img">
+              <div class="profile-dropdown-info">
+                <div id="profile-name">Jenna Marie Hiponia</div>
+                <div id="profile-email">jenna.prittie.marie@test.com</div>
+                <div id="profile-role">Role: Admin</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Line -->
+        <div class="horizontal-line"></div>
+
+      <div class="top-controls">
+        <div class="select-container">
+          <select name="QAP" id="QAP" onchange="navigateToPage()">
+            <option value="quota.html">Quotations</option>
+            <option value="pricing.html">Pricing</option>
+          </select>
+          <svg class="arrow-down-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <div class="search-container">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search"
+            oninput="filterQuotations(this.value)"
+          />
+        </div>
+      </div>
+
+      <div id="output">Loading...</div>
+    </main>
+  </div>
+
+  <!-- Modal HTML -->
+  <div id="customerModal" class="modal-overlay">
+    <div class="modal-box">
+      <h2 id="modalTitle">Quotation</h2>
+      <form id="quotationForm" onsubmit="event.preventDefault(); saveQuotation();">
+        <div>
+          <label for="modalCustomerId">Customer Id</label>
+          <input id="modalCustomerId" type="number" required>
+        </div>
+        <div>
+          <label for="modalTotalAmount">Total Amount</label>
+          <input id="modalTotalAmount" type="number" step="0.01" required>
+        </div>
+        <div>
+          <label for="modalStatus">Status</label>
+          <select id="modalStatus" required>
+            <option value="">Select Status</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-add" id="modalSaveBtn" type="submit">Save</button>
+          <button class="btn-circle" type="button" onclick="closeModal()">✕</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+        <div id="logout-modal" style="display:none;" class="custom-modal">
+          <div class="modal-content" style="min-width:340px; text-align:center;">
+            <div style="margin-bottom:15px;">
+              <img src="excla.png" alt="Success" style="height: 80px; weight: 80px">
+            </div>
+            <h2 style="color:#222; margin-bottom:8px;">Are you logging out?</h2>
+            <div style="color:#444; margin-bottom:24px; font-size: 0.8rem;">
+              Are you sure want to log out?<br>
+              All your unsaved data will be lost.
+            </div>
+            <div style="display:flex; justify-content:center; gap:18px;">
+              <button id="cancel-logout" class="logout-btn cancel-btn">Cancel</button>
+              <button id="confirm-logout" class="logout-btn confirm-btn">Log out</button>
+            </div>
+          </div>
+        </div>
+
+  <script>
+    function navigateToPage() {
+      const selectedValue = document.getElementById("QAP").value;
+      if (selectedValue) {
+        window.location.href = selectedValue;
+      }
+    }
+
+          // --- LOGOUT MODAL LOGIC ---
+          // Show the logout modal
+          function showLogoutModal() {
+              document.getElementById('logout-modal').style.display = 'flex';
+          }
+          // Hide the logout modal
+          function hideLogoutModal() {
+              document.getElementById('logout-modal').style.display = 'none';
+          }
+          // Attach modal logic to buttons
+          document.getElementById('cancel-logout').onclick = hideLogoutModal;
+          document.getElementById('confirm-logout').onclick = function() {
+              window.location.href = 'login.html';
+          };
+          // Attach modal to sidebar logout link
+          const logoutLink = document.querySelector('.bottom a:last-child');
+          if (logoutLink) {
+              logoutLink.onclick = function(event) {
+                  event.preventDefault();
+                  showLogoutModal();
+              };
+          }
+  </script>
 
   <script type="module">
     import { neon } from "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.7.0/+esm";
@@ -601,13 +308,12 @@
     function formatDate(dateString) {
       if (!dateString) return '';
       const d = new Date(dateString);
-      if (isNaN(d.getTime())) return ''; // Invalid date check
-      return d.toISOString().split('T')[0]; // YYYY-MM-DD
+      if (isNaN(d.getTime())) return '';
+      return d.toISOString().split('T')[0];
     }
 
     let currentEditId = null;
 
-    // Fetch all quotations with customer and product info
     async function fetchAllQuotations() {
       try {
         const result = await sql`
@@ -630,7 +336,6 @@
       }
     }
 
-    // Render the table
     function renderQuotationTable(data) {
       let html = `
         <table>
@@ -668,18 +373,14 @@
                 : '—'
             }</span></td>
             <td>${formatDate(row.updated_at)}</td>
-          
-          <td>
+            <td>
               <div class="table-actions">
-                <!-- View Button -->
                 <button class="action-btn" onclick="viewQuotation(${row.quotation_id})" title="View">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </button>
-
-                <!-- Edit Button -->
                 <button class="action-btn" onclick="editQuotation(${row.quotation_id})" title="Edit">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652l-1.688 1.687m-2.651-2.651L6.478 16.22a4.5 4.5 0 00-1.12 1.873l-.622 2.49a.375.375 0 00.465.465l2.49-.622a4.5 4.5 0 001.873-1.12l10.386-10.387m-2.651-2.651l2.651 2.651" />
@@ -695,7 +396,6 @@
       document.getElementById('output').innerHTML = html;
     }
 
-    // Search filter
     function filterQuotations(keyword) {
       const filtered = window.quotationData.filter(row =>
         String(row.customer_id).toLowerCase().includes(keyword.toLowerCase()) ||
@@ -704,73 +404,60 @@
       renderQuotationTable(filtered);
     }
 
-    // Modal handling
     window.openModal = function () {
-    currentEditId = null; // Reset for new
-    const modal = document.getElementById("customerModal");
-    document.getElementById("modalTitle").textContent = "New Quotation";
-    document.getElementById("quotationForm").reset();
-    document.getElementById("modalStatus").disabled = false;
-    document.querySelectorAll("#customerModal input").forEach(input => input.disabled = false);
-    document.getElementById("modalSaveBtn").style.display = "";
-    modal.style.display = "flex";
-};
+      currentEditId = null;
+      const modal = document.getElementById("customerModal");
+      document.getElementById("modalTitle").textContent = "New Quotation";
+      document.getElementById("quotationForm").reset();
+      document.getElementById("modalStatus").disabled = false;
+      document.querySelectorAll("#customerModal input").forEach(input => input.disabled = false);
+      document.getElementById("modalSaveBtn").style.display = "";
+      modal.style.display = "flex";
+    };
 
     window.closeModal = function () {
       document.getElementById("customerModal").style.display = "none";
     };
 
-    // View Quotation
     window.viewQuotation = function(id){
-        const quotation = window.quotationData.find(q => q.quotation_id === id);
-        if (!quotation) return;
-
-        const modal = document.getElementById("customerModal");
-        document.getElementById("modalTitle").textContent = "View Quotation";
-
-        document.getElementById("modalCustomerId").value = quotation.customer_id;
-        document.getElementById("modalTotalAmount").value = quotation.total_amount;
-        document.getElementById("modalStatus").value = quotation.status;
-        document.getElementById("modalStatus").disabled = true;
-
-        document.querySelectorAll("#customerModal input").forEach(input => input.disabled = true);
-        document.getElementById("modalSaveBtn").style.display = "none";
-        modal.style.display = "flex";
+      const quotation = window.quotationData.find(q => q.quotation_id === id);
+      if (!quotation) return;
+      const modal = document.getElementById("customerModal");
+      document.getElementById("modalTitle").textContent = "View Quotation";
+      document.getElementById("modalCustomerId").value = quotation.customer_id;
+      document.getElementById("modalTotalAmount").value = quotation.total_amount;
+      document.getElementById("modalStatus").value = quotation.status;
+      document.getElementById("modalStatus").disabled = true;
+      document.querySelectorAll("#customerModal input").forEach(input => input.disabled = true);
+      document.getElementById("modalSaveBtn").style.display = "none";
+      modal.style.display = "flex";
     };
 
-    // Edit Quotation
-        window.editQuotation = function(id) {
-          currentEditId = id; // Track which row is being edited
-            const quotation = window.quotationData.find(q => q.quotation_id === id);
-            if (!quotation) return;
-
-        const modal = document.getElementById("customerModal");
-        document.getElementById("modalTitle").textContent = "Edit Quotation";
-
-        document.getElementById("modalCustomerId").value = quotation.customer_id;
-        document.getElementById("modalTotalAmount").value = quotation.total_amount;
-        document.getElementById("modalStatus").value = quotation.status;
-        document.getElementById("modalStatus").disabled = false;
-
-        document.querySelectorAll("#customerModal input").forEach(input => input.disabled = false);
-        document.getElementById("modalSaveBtn").style.display = "";
-        modal.style.display = "flex";
+    window.editQuotation = function(id) {
+      currentEditId = id;
+      const quotation = window.quotationData.find(q => q.quotation_id === id);
+      if (!quotation) return;
+      const modal = document.getElementById("customerModal");
+      document.getElementById("modalTitle").textContent = "Edit Quotation";
+      document.getElementById("modalCustomerId").value = quotation.customer_id;
+      document.getElementById("modalTotalAmount").value = quotation.total_amount;
+      document.getElementById("modalStatus").value = quotation.status;
+      document.getElementById("modalStatus").disabled = false;
+      document.querySelectorAll("#customerModal input").forEach(input => input.disabled = false);
+      document.getElementById("modalSaveBtn").style.display = "";
+      modal.style.display = "flex";
     };
 
-    //Save Quotation
     window.saveQuotation = async function () {
       const customerId = document.getElementById("modalCustomerId").value;
       const totalAmount = document.getElementById("modalTotalAmount").value;
       const status = document.getElementById("modalStatus").value;
-
       if (!customerId || !totalAmount || !status) {
         alert("Please fill out all fields.");
         return;
       }
-
       try {
         if (currentEditId) {
-          // UPDATE existing row
           await sql`
             UPDATE quotation_history
             SET customer_id = ${customerId},
@@ -780,7 +467,6 @@
             WHERE quotation_id = ${currentEditId}
           `;
         } else {
-          // INSERT new row
           await sql`
             INSERT INTO quotation_history (customer_id, status, total_amount, created_at)
             VALUES (${customerId}, ${status}, ${totalAmount}, NOW())
@@ -793,10 +479,28 @@
       }
     };
 
-    // On page load
-    window.onload = () => {
-      fetchAllQuotations();
+      // Profile dropdown logic
+      window.onload = () => {
+        fetchAllQuotations();
 
+      // Profile dropdown toggle
+      const profileBtn = document.getElementById('profile-btn');
+      const profileDropdown = document.getElementById('profile-dropdown');
+      profileBtn.onclick = function(event) {
+        event.stopPropagation();
+        profileDropdown.classList.toggle('show');
+      };
+      document.addEventListener('click', function(e) {
+        if (!profileDropdown.contains(e.target) && e.target !== profileBtn) {
+          profileDropdown.classList.remove('show');
+        }
+      });
+
+      // Fetch user profile info
+      const loggedInUsername = localStorage.getItem('loggedInUser');
+      fetchUserProfile(loggedInUsername);
+
+      // Search filter
       const searchInput = document.getElementById("searchInput");
       if (searchInput) {
         searchInput.addEventListener("input", function () {
@@ -804,201 +508,29 @@
         });
       }
     };
+
+    async function fetchUserProfile(username) {
+      if (!username) return;
+      try {
+        const result = await sql`
+          SELECT username, email, role, first_name, last_name
+          FROM users
+          WHERE username = ${username}
+          LIMIT 1
+        `;
+        if (result.length > 0) {
+          const user = result[0];
+          document.getElementById('profile-name').textContent = user.first_name && user.last_name
+            ? user.first_name + ' ' + user.last_name
+            : user.username;
+          document.getElementById('profile-email').textContent = user.email;
+          document.getElementById('profile-role').textContent = "Role: " + (user.role || "User");
+        }
+      } catch (err) {
+        console.error("Failed to fetch user profile:", err);
+      }
+    }
   </script>
-
-</head>
-<body>
-  <div class="container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div>
-        <div class="logo">
-          <img src="logo.png" alt="Logo"/></img>
-          <span class="logoname">Skin Bloom</span>
-        </div>
-        <nav class="nav">
-          <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
-          <a href="customers_data.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg><span>Customers Data</span></a>
-          <a href="LO.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-search-icon lucide-user-search"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>Lead & Opportunity</a>
-          <a href="sales_order.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-dollar-sign-icon lucide-badge-dollar-sign"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>Sales Order</a>
-          <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-quote-icon lucide-text-quote"><path d="M17 6H3"/><path d="M21 12H8"/><path d="M21 18H8"/><path d="M3 12v6"/></svg>Quotations & Pricing</a>
-          <a href="cs_tickets.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>Customer Support</a>
-        </nav>
-      </div>
-      <div class="bottom">
-        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Logout</a>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main">
-      <!-- Top Navigation Bar -->
-        <div class="top-nav">
-          <h1 class="page-title">Quotation & Pricing</h1>
-          <div class="header-icons">
-            <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-            </svg>
-            <div style="position:relative;">
-              <img src="profile.jpg" alt="Profile" class="profile-img" id="profile-btn" />
-              <div id="profile-dropdown" class="profile-dropdown">
-                <img src="profile.jpg" alt="Profile" class="profile-dropdown-img">
-                <div class="profile-dropdown-info">
-                  <div id="profile-name">Jenna Marie Hiponia</div>
-                  <div id="profile-email">jenna.prittie.marie@test.com</div>
-                  <div id="profile-role">Role: Admin</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      <div class="top-controls">
-        <div class="select-container">
-          <select name="QAP" id="QAP" onchange="navigateToPage()">
-            <option value="quota.html">Quotations</option>
-            <option value="pricing.html">Pricing</option>
-          </select>
-          <svg class="arrow-down-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-
-        <!-- Logout Confirmation Modal -->
-        <div id="logout-modal" style="display:none;" class="custom-modal">
-          <div class="modal-content" style="min-width:340px; text-align:center;">
-            <div style="margin-bottom:15px;">
-              <img src="excla.png" alt="Success" style="height: 80px; weight: 80px">
-            </div>
-            <h2 style="color:#222; margin-bottom:8px;">Are you logging out?</h2>
-            <div style="color:#444; margin-bottom:24px; font-size: 0.8rem;">
-              Are you sure want to log out?<br>
-              All your unsaved data will be lost.
-            </div>
-            <div style="display:flex; justify-content:center; gap:18px;">
-              <button id="cancel-logout" class="logout-btn cancel-btn">Cancel</button>
-              <button id="confirm-logout" class="logout-btn confirm-btn">Log out</button>
-            </div>
-          </div>
-        </div>
-
-        <script>
-          function navigateToPage() {
-            const selectedValue = document.getElementById("QAP").value;
-            if (selectedValue) {
-              window.location.href = selectedValue;
-            }
-          }
-
-          // --- LOGOUT MODAL LOGIC ---
-          // Show the logout modal
-          function showLogoutModal() {
-              document.getElementById('logout-modal').style.display = 'flex';
-          }
-          // Hide the logout modal
-          function hideLogoutModal() {
-              document.getElementById('logout-modal').style.display = 'none';
-          }
-          // Attach modal logic to buttons
-          document.getElementById('cancel-logout').onclick = hideLogoutModal;
-          document.getElementById('confirm-logout').onclick = function() {
-              window.location.href = 'login.html';
-          };
-          // Attach modal to sidebar logout link
-          const logoutLink = document.querySelector('.bottom a:last-child');
-          if (logoutLink) {
-              logoutLink.onclick = function(event) {
-                  event.preventDefault();
-                  showLogoutModal();
-              };
-          }
-          
-              // Profile dropdown toggle
-            document.getElementById('profile-btn').addEventListener('click', function() {
-              const dropdown = document.getElementById('profile-dropdown');
-              dropdown.classList.toggle('show');
-            });
-
-            // 1. Get the logged-in username
-            const loggedInUsername = localStorage.getItem('loggedInUser');
-            // 2. Fetch user info from the database
-            async function fetchUserProfile(username) {
-              if (!username) return;
-              try {
-                // Use your Neon connection (already imported as 'sql')
-                const result = await sql`
-                  SELECT username, email, role, first_name, last_name
-                  FROM users
-                  WHERE username = ${username}
-                  LIMIT 1
-                `;
-                if (result.length > 0) {
-                  const user = result[0];
-                  // Fill the profile dropdown with real data
-                  document.getElementById('profile-name').textContent = user.first_name && user.last_name
-                    ? user.first_name + ' ' + user.last_name
-                    : user.username;
-                  document.getElementById('profile-email').textContent = user.email;
-                  document.getElementById('profile-role').textContent = "Role: " + (user.role || "User");
-                }
-              } catch (err) {
-                console.error("Failed to fetch user profile:", err);
-              }
-            }
-            // 3. Call this function on page load
-            fetchUserProfile(loggedInUsername);
-        </script>
-
-        <div class="search-container">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
-          </svg>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search"
-            oninput="filterQuotations(this.value)"
-          />
-        </div>
-      </div>
-
-      <div id="output">Loading...</div>
-    </main>
-  </div>
-
-  <!-- Modal HTML -->
-  <!-- Quotation Modal -->
-  <div id="customerModal" class="modal-overlay">
-    <div class="modal-box">
-      <h2 id="modalTitle">Quotation</h2>
-      <form id="quotationForm" onsubmit="event.preventDefault(); saveQuotation();">
-        <div>
-          <label for="modalCustomerId">Customer Id</label>
-          <input id="modalCustomerId" type="number" required>
-        </div>
-        <div>
-          <label for="modalTotalAmount">Total Amount</label>
-          <input id="modalTotalAmount" type="number" step="0.01" required>
-        </div>
-        <div>
-          <label for="modalStatus">Status</label>
-          <select id="modalStatus" required>
-            <option value="">Select Status</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
-        <div class="modal-actions">
-          <button class="btn-add" id="modalSaveBtn" type="submit">Save</button>
-          <button class="btn-circle" type="button" onclick="closeModal()">✕</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
+  
 </body>
 </html>
-
