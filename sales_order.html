@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -23,6 +23,7 @@
       overflow: hidden;
     }
 
+    /* Sidebar Styling */
     .sidebar {
       width: 240px;
       background-color: #fdfffa;
@@ -41,7 +42,6 @@
       font-size: 1.5rem;
       margin-bottom: 30px;
       padding-left: 20px;
-
       background: linear-gradient(70deg, #cc79f0, #3e7ef7);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -115,29 +115,53 @@
       stroke: #ffffff;
     }
 
-    /* --- Main Content Styling --- */
-    .main {
-      flex: 1;
-      padding: 2rem 3rem;
+         /* Main Content Styling */
+     .main {
+       flex: 1;
+       background-color: #fdfffa;
+       overflow-y: auto;
+       font-family: 'Quicksand', sans-serif;
+       display: flex;
+       flex-direction: column;
+     }
+
+          /* Top Navigation Bar */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       background-color: #fdfffa;
-      overflow-y: auto;
-      font-family: 'Quicksand', sans-serif;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    h1 {
+    .page-title {
       font-family: 'Poppins', sans-serif;
       font-size: 26px;
-      margin-bottom: 3rem;
       color: #333135;
+      margin: 0;
     }
 
     .header-icons {
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      justify-content: flex-end;
-      margin-top: -90px; 
-      margin-bottom: 1rem;
+    }
+
+    .horizontal-line {
+        height: 1px;
+        background-color: #E5E7EB;
+        width: 90%;
+        margin: 0 auto;
+        opacity: 0.4;
+      }
+
+    .main-content {
+        flex: 1;
+        padding: 0.5rem 3rem 2rem 3rem;
+        overflow-y: auto;
     }
 
     .icon-bell {
@@ -167,54 +191,138 @@
     }
 
     .top-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 3rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap; 
+       display: flex;
+       gap: 10px;
+       margin-top: 0;
+       align-items: center;
+       padding: 5px;
     }
 
-    .search-container {
+    .select-container {
       position: relative;
-      width: 500px;
-      margin-bottom: 0;
+      display: inline-block;
+      width: 200px; 
     }
 
-    .search-container input {
+    .select-container select {
       width: 100%;
-      padding: 10px 12px 10px 40px;
-      border: 1px solid #d1d5db;
-      border-radius: 9999px;
-      background-color: #f8f8f8;
+      padding: 8px 36px 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 14px;
-      font-family: 'Inter', sans-serif;
+      background-color: white;
+      appearance: none;
       outline: none;
-      transition: 0.3s ease;
+      cursor: pointer;
+      min-width: 120px;
+      transition: border-color 0.2s;
     }
 
-    .search-container input:focus {
-      border-color: #9b8cfb;
-      background-color: #fff;
-      box-shadow: 0 0 0 2px rgba(155, 140, 251, 0.3);
+    .select-container select:hover,
+    .select-container select:focus {
+      border-color: #B3B3B3;
     }
 
-    .search-icon {
+    .arrow-down-icon {
       position: absolute;
       top: 50%;
-      left: 12px;
-      width: 18px;
-      height: 18px;
-      stroke: #6b7280;
+      right: 12px;
       transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: #333;
       pointer-events: none;
     }
 
+    .search-container {
+       display: flex;
+       align-items: center;
+       border: 1px solid #B3B3B3;
+       border-radius: 999px;
+       padding: 6px 12px;
+       width: 100%;
+       max-width: 400px;
+       background-color: transparent;
+       transition: border-color 0.2s;
+       margin-bottom: 0.5rem;
+    }
+
+    .search-container:focus-within {
+      border-color: #B3B3B3;
+    }
+
+    .search-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      color: #B3B3B3;
+    }
+
+    .search-container input {
+      border: none;
+      outline: none;
+      width: 100%;
+      background: transparent;
+      font-size: 14px;
+    }
+
+    /* Button Styling */
     .icon-buttons {
       display: flex;
       gap: 1rem;
-      margin: 1rem 0;
       justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      margin: 1rem 0 1rem auto;
+    }
+
+    .btn-add {
+      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(90deg, #8b7cfb, #318af7);
+    }
+
+    .btn-add .icon {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+    }
+
+    .btn-circle {
+      width: 42px;
+      height: 42px;
+      background-color: #f1f1f5;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-circle:hover {
+      background-color: #e0e0eb;
+    }
+
+    .btn-circle .icon-pencil {
+      width: 20px;
+      height: 20px;
+      stroke: #6b7280;
+      transition: stroke 0.3s ease;
+    }
+
+    .btn-circle:hover .icon-pencil {
+      stroke: #4b8efb;
     }
 
     .status-badge {
@@ -247,6 +355,7 @@
       background: #ffa300;
     }
 
+    /* Table Styling */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -265,136 +374,6 @@
       color: #4B5563;
       font-weight: 600;
       border-bottom: 1px solid #E5E7EB;
-    }
-
-    #output {
-      background-color: #f8f8f8;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
-      font-size: 14px;
-    }
-
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 2rem; 
-    }
-
-    
-    .modal-box {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      display: grid;
-      grid-template-columns: 1fr 1fr; 
-      gap: 1rem 2rem; 
-      height: auto; 
-    }
-    .modal-box h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 20px;
-      color: #374151;
-      grid-column: span 2;
-    }
-
-    .modal-box input,
-    .modal-box select,
-    .modal-box textarea {
-      padding: 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-      width: 100%;     
-      min-width: 0; 
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      margin-top: 1rem;
-      grid-column: span 2;
-    }
-
-    /*add*/
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-    .btn-add {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(90deg, #9b8cfb, #3799fb);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 9999px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .btn-add:hover {
-      background: linear-gradient(90deg, #8b7cfb, #318af7);
-    }
-
-    .btn-circle {
-      width: 42px;
-      height: 42px;
-      background-color: #f1f1f5;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .btn-circle:hover {
-      background-color: #e0e0eb;
-    }
-
-    .action-btn {
-      width: 32px;
-      height: 32px;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.2s ease;
-    }
-
-    .action-btn svg {
-      width: 18px;
-      height: 18px;
-      stroke: #6b7280;
-      transition: stroke 0.2s ease;
-    }
-
-    .action-btn:hover svg {
-      stroke: #4b8efb;
     }
 
     .table-actions {
@@ -430,8 +409,270 @@
     .action-btn:hover svg {
       stroke: #4b8efb;
     }
-    
+
+    #output {
+      background-color: #f8f8f8;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+      font-size: 14px;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+       padding: 20px;
+    }
+
+    .modal-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modal-box h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      color: #374151;
+    }
+
+         .modal-box input,
+     .modal-box select {
+       padding: 10px;
+       border: 1px solid #d1d5db;
+       border-radius: 8px;
+       font-size: 14px;
+       font-family: 'Inter', sans-serif;
+       width: 100%;
+     }
+
+     .modal-box select {
+       background-color: white;
+       cursor: pointer;
+     }
+
+     .modal-actions {
+       display: flex;
+       justify-content: space-between;
+       margin-top: 1rem;
+     }
+
+     #viewCustomerContent p {
+       margin: 0.5rem 0;
+       font-size: 14px;
+       line-height: 1.5;
+     }
+
+     #viewCustomerContent h3 {
+       font-family: 'Poppins', sans-serif;
+       font-size: 16px;
+       margin-bottom: 1rem;
+     }
   </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo">
+          <img src="logo.png" alt="Logo" />
+          SkinBloom
+        </div>
+        <nav class="nav">
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="9" x="3" y="3" rx="1"/>
+              <rect width="7" height="5" x="14" y="3" rx="1"/>
+              <rect width="7" height="9" x="14" y="12" rx="1"/>
+              <rect width="7" height="5" x="3" y="16" rx="1"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="customers_data.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <path d="M16 3.128a4 4 0 0 1 0 7.744"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <circle cx="9" cy="7" r="4"/>
+            </svg>
+            <span>Customers Data</span>
+          </a>
+          <a href="LO.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="7" r="4"/>
+              <path d="M10.3 15H7a4 4 0 0 0-4 4v2"/>
+              <circle cx="17" cy="17" r="3"/>
+              <path d="m21 21-1.9-1.9"/>
+            </svg>
+            Lead & Opportunity
+          </a>
+          <a href="sales_order.html" class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+              <path d="M12 18V6"/>
+            </svg>
+            Sales Order
+          </a>
+          <a href="quota.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 6H3"/>
+              <path d="M21 12H8"/>
+              <path d="M21 18H8"/>
+              <path d="M3 12v6"/>
+            </svg>
+            Quotations & Pricing
+          </a>
+          <a href="cs_tickets.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>
+            </svg>
+            Customer Support
+          </a>
+        </nav>
+      </div>
+      <div class="bottom">
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m16 17 5-5-5-5"/>
+            <path d="M21 12H9"/>
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          </svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+         <!-- Main Content -->
+     <main class="main">
+               <!-- Top Navigation Bar -->
+        <div class="top-nav">
+          <h1 class="page-title">Sales Order</h1>
+          <div class="header-icons">
+            <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+            </svg>
+            <img src="profile.jpg" alt="Profile" class="profile-img" />
+          </div>
+        </div>
+
+        <!-- Horizontal Line -->
+        <div class="horizontal-line"></div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+         <div class="top-controls">
+           <div class="search-container">
+             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+             </svg>
+             <input
+               type="text"
+               id="searchInput"
+               placeholder="Search"
+               oninput="filterLeads(this.value)"
+             />
+           </div>
+         </div>
+
+         <div id="output">Loading...</div>
+       </div>
+     </main>
+  </div>
+
+     <!-- Add Customer Modal -->
+   <div id="customerModal" class="modal-overlay">
+     <div class="modal-box">
+       <h2 id="modalTitle">Add Customer</h2>
+       <input id="modalFirstName" placeholder="First Name">
+       <input id="modalLastName" placeholder="Last Name">
+       <input id="modalEmail" placeholder="Email">
+       <input id="modalPhone" placeholder="Phone">
+
+       <div class="modal-actions">
+         <button class="btn-add" onclick="saveCustomer()">Save</button>
+         <button class="btn-circle" onclick="closeModal()">✕</button>
+       </div>
+     </div>
+   </div>
+
+               <!-- View Customer Modal -->
+     <div id="viewCustomerModal" class="modal-overlay">
+       <div class="modal-box">
+         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+           <h2 style="margin: 0;">Customer Details</h2>
+           <button class="btn-circle" onclick="closeViewModal()" style="width: 32px; height: 32px; font-size: 14px;">✕</button>
+         </div>
+         <div id="viewCustomerContent">
+           <!-- Content will be populated dynamically -->
+         </div>
+       </div>
+     </div>
+
+    <!-- Edit Customer Modal -->
+<div id="salesOrderModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2 id="modalTitle" style="grid-column: span 2;">Add Sales Order</h2>
+    <div>
+      <label>Order ID</label>
+      <input id="modalOrderId" placeholder="Order ID" disabled>
+    </div>
+    <div>
+      <label>Customer</label>
+      <input id="modalCustomerId" placeholder="Customer Id">
+    </div>
+    <div>
+      <label>Order Date</label>
+      <input id="modalOrderDate" placeholder="Order Date" type="date">
+    </div>
+    <div>
+      <label>Order Status</label>
+      <select id="modalOrderStatus">
+        <option value="">Order Status</option>
+        <option value="pending">pending</option>
+        <option value="processing">processing</option>
+        <option value="shipped">shipped</option>
+        <option value="delivered">delivered</option>
+      </select>
+    </div>
+    <div>
+      <label>Payment Status</label>
+      <select id="modalPaymentStatus">
+        <option value="">Select Payment Status</option>
+        <option value="paid">Paid</option>
+        <option value="unpaid">Unpaid</option>
+      </select>
+    </div>
+    <div>
+      <label>Total Amount</label>
+      <input id="modalTotalAmount" placeholder="Total Amount" type="number" step="0.01">
+    </div>
+    <div>
+      <label>Shipping Address</label>
+      <input id="modalShippingAddress" placeholder="Shipping Address">
+    </div>
+    <div>
+      <label>Account Created By</label>
+      <input id="modalAccountCreatedBy" placeholder="Account Created By">
+    </div>
+    <div class="modal-actions" style="grid-column: span 2;">
+      <button class="btn-add" id="modalSaveBtn" onclick="saveSalesOrder()">Save</button>
+      <button class="btn-circle" onclick="closeModal()">✕</button>
+    </div>
+  </div>
 
   <script type="module">
     import { neon } from "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.7.0/+esm";
@@ -454,7 +695,7 @@
             CONCAT(c.first_name, ' ', c.last_name) AS customer 
           FROM sales_orders so
           JOIN customers c ON c.customer_id = so.customer_id
-          ORDER BY so.order_id ASC
+          ORDER BY so.order_id DESC
         `;
         window.salesOrderData = result;
         renderTable(result);
@@ -470,7 +711,7 @@
         <table>
           <tr>
             <th>Order ID</th>
-            <th>Customer</th>
+            <th>Customer Name</th>
             <th>Order Date</th>
             <th>Total Amount</th>
             <th>Order Status</th>
@@ -504,7 +745,7 @@
             <td>${row.order_id}</td>
             <td>${row.customer}</td>
             <td>${new Date(row.order_date).toLocaleDateString()}</td>
-            <td>₱${parseFloat(row.total_amount).toFixed(2)}</td>
+            <td>₱ ${parseFloat(row.total_amount).toFixed(2)}</td>
             <td><span class="${statusClass}">${
               row.order_status
               ? row.order_status.charAt(0).toUpperCase() + row.order_status.slice(1).toLowerCase()
@@ -577,190 +818,84 @@
     };
 
     // INSERT NEW SALES ORDER
-window.saveSalesOrder = async function () {
-  const orderId = document.getElementById("modalOrderId").value;
-  const orderDate = document.getElementById("modalOrderDate").value;
-  const totalAmount = document.getElementById("modalTotalAmount").value;
-  const orderStatus = document.getElementById("modalOrderStatus").value;
-  const paymentStatus = document.getElementById("modalPaymentStatus").value;
-  const createdBy = document.getElementById("modalAccountCreatedBy").value;
+    window.saveSalesOrder = async function () {
+      const orderId = document.getElementById("modalOrderId").value;
+      const orderDate = document.getElementById("modalOrderDate").value;
+      const totalAmount = document.getElementById("modalTotalAmount").value;
+      const orderStatus = document.getElementById("modalOrderStatus").value;
+      const paymentStatus = document.getElementById("modalPaymentStatus").value;
+      const createdBy = document.getElementById("modalAccountCreatedBy").value;
 
-  if (!orderId || !orderDate || !totalAmount) {
-    alert("Please fill out all fields.");
-    return;
-  }
+      if (!orderId || !orderDate || !totalAmount) {
+        alert("Please fill out all fields.");
+        return;
+      }
 
-  try {
-    await sql`
-      INSERT INTO sales_orders (customer_id, order_date, total_amount, order_status, payment_status, created_by)
-      VALUES (
-        ${orderId}, 
-        ${orderDate}, 
-        ${totalAmount}, 
-        ${orderStatus}, 
-        ${paymentStatus},
-        ${createdBy}
-      )  
-    `;
-    closeModal();
-    fetchAllSalesOrders();
-  } catch (error) {
-    alert("Failed to save: " + error.message);
-  }
-}; // <-- This closes saveSalesOrder
+      try {
+        await sql`
+          INSERT INTO sales_orders (customer_id, order_date, total_amount, order_status, payment_status, created_by)
+          VALUES (
+            ${orderId}, 
+            ${orderDate}, 
+            ${totalAmount}, 
+            ${orderStatus}, 
+            ${paymentStatus},
+            ${createdBy}
+          )  
+        `;
+        closeModal();
+        fetchAllSalesOrders();
+      } catch (error) {
+        alert("Failed to save: " + error.message);
+      }
+    }; // <-- This closes saveSalesOrder
 
-// View sales order
-window.viewSales = function (id) {
-  const sales = window.salesOrderData.find(so => so.order_id === id);
-  if (!sales) return;
+    // View sales order
+    window.viewSales = function (id) {
+      const sales = window.salesOrderData.find(so => so.order_id === id);
+      if (!sales) return;
 
-  document.getElementById("modalTitle").textContent = "View Sales Order";
-  document.getElementById("modalOrderId").value = sales.order_id;
-  document.getElementById("modalCustomerId").value = sales.customer_id;
-  document.getElementById("modalOrderDate").value = 
-  new Date(sales.order_date).toISOString().split("T")[0];
-  document.getElementById("modalTotalAmount").value = sales.total_amount;
-  document.getElementById("modalShippingAddress").value = sales.shipping_address || '';
-  document.getElementById("modalOrderStatus").value = sales.order_status || '';
-  document.getElementById("modalPaymentStatus").value = sales.payment_status || '';
-  document.getElementById("modalAccountCreatedBy").value = sales.created_by || '';
-  setModalFieldsDisabled(true);
-  document.getElementById("modalSaveBtn").style.display = "none";
-  document.getElementById("salesOrderModal").style.display = "flex";
-};
+      document.getElementById("modalTitle").textContent = "View Sales Order";
+      document.getElementById("modalOrderId").value = sales.order_id;
+      document.getElementById("modalCustomerId").value = sales.customer_id;
+      document.getElementById("modalOrderDate").value = 
+      new Date(sales.order_date).toISOString().split("T")[0];
+      document.getElementById("modalTotalAmount").value = sales.total_amount;
+      document.getElementById("modalShippingAddress").value = sales.shipping_address || '';
+      document.getElementById("modalOrderStatus").value = sales.order_status || '';
+      document.getElementById("modalPaymentStatus").value = sales.payment_status || '';
+      document.getElementById("modalAccountCreatedBy").value = sales.created_by || '';
+      setModalFieldsDisabled(true);
+      document.getElementById("modalSaveBtn").style.display = "none";
+      document.getElementById("salesOrderModal").style.display = "flex";
+    };
 
-window.editSales = function (id) {
-  const sales = window.salesOrderData.find(c => c.order_id === id);
-  if (!sales) return;
+    window.editSales = function (id) {
+      const sales = window.salesOrderData.find(c => c.order_id === id);
+      if (!sales) return;
 
-  document.getElementById("modalTitle").textContent = "Edit Sales Order";
-  document.getElementById("modalOrderId").value = sales.order_id;
-  document.getElementById("modalCustomerId").value = sales.customer_id;
-  document.getElementById("modalOrderDate").value = 
-  new Date(sales.order_date).toISOString().split("T")[0];
-  document.getElementById("modalTotalAmount").value = sales.total_amount;
-  document.getElementById("modalShippingAddress").value = sales.shipping_address || '';
-  document.getElementById("modalOrderStatus").value = sales.order_status || '';
-  document.getElementById("modalPaymentStatus").value = sales.payment_status || '';
-  document.getElementById("modalAccountCreatedBy").value = sales.created_by || '';
-  setModalFieldsDisabled(false);
-  document.getElementById("modalSaveBtn").style.display = "";
-  document.getElementById("salesOrderModal").style.display = "flex";
-};
+      document.getElementById("modalTitle").textContent = "Edit Sales Order";
+      document.getElementById("modalOrderId").value = sales.order_id;
+      document.getElementById("modalCustomerId").value = sales.customer_id;
+      document.getElementById("modalOrderDate").value = 
+      new Date(sales.order_date).toISOString().split("T")[0];
+      document.getElementById("modalTotalAmount").value = sales.total_amount;
+      document.getElementById("modalShippingAddress").value = sales.shipping_address || '';
+      document.getElementById("modalOrderStatus").value = sales.order_status || '';
+      document.getElementById("modalPaymentStatus").value = sales.payment_status || '';
+      document.getElementById("modalAccountCreatedBy").value = sales.created_by || '';
+      setModalFieldsDisabled(false);
+      document.getElementById("modalSaveBtn").style.display = "";
+      document.getElementById("salesOrderModal").style.display = "flex";
+    };
 
-function setModalFieldsDisabled(disabled) {
-  document.querySelectorAll("#salesOrderModal input, #salesOrderModal select").forEach(input => {
-    if (input.id !== "modalOrderId") input.disabled = disabled;
-  });
-}
+    function setModalFieldsDisabled(disabled) {
+      document.querySelectorAll("#salesOrderModal input, #salesOrderModal select").forEach(input => {
+        if (input.id !== "modalOrderId") input.disabled = disabled;
+      });
+    }
     
 
   </script>
-
-</head>
-<body>
-  <div class="container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div>
-        <div class="logo">
-          <img src="logo.png" alt="Logo" />
-          SkinBloom
-        </div>
-        <nav class="nav">
-          <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
-          <a href="customers_data.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg><span>Customers Data</span></a>
-          <a href="LO.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-search-icon lucide-user-search"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>Lead & Opportunity</a>
-          <a href="#" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-dollar-sign-icon lucide-badge-dollar-sign"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>Sales Order</a>
-          <a href="quota.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-quote-icon lucide-text-quote"><path d="M17 6H3"/><path d="M21 12H8"/><path d="M21 18H8"/><path d="M3 12v6"/></svg>Quotations & Pricing</a>
-          <a href="cs_tickets.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>Customer Support</a>
-        </nav>
-      </div>
-      <div class="bottom">
-              <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Logout</a>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main">
-      <h1>Sales Orders</h1>
-
-      <div class="header-icons">
-        <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-        </svg>
-        <img src="profile.jpg" alt="Profile" class="profile-img" />
-      </div>
-
-      <div class="top-controls">
-        <div class="search-container">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
-          </svg>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search customer..."
-            oninput="filterCustomers(this.value)"
-          />
-        </div>
-      </div>
-
-      <div id="output">Loading...</div>
-    </main>
-  </div>
-
-  <!-- ...existing code... -->
-<div id="salesOrderModal" class="modal-overlay">
-  <div class="modal-box">
-    <h2 id="modalTitle" style="grid-column: span 2;">Add Sales Order</h2>
-    <div>
-      <label>Order ID</label>
-      <input id="modalOrderId" placeholder="Order ID" disabled>
-    </div>
-    <div>
-      <label>Customer</label>
-      <input id="modalCustomerId" placeholder="Customer Id">
-    </div>
-    <div>
-      <label>Order Date</label>
-      <input id="modalOrderDate" placeholder="Order Date" type="date">
-    </div>
-    <div>
-      <label>Order Status</label>
-      <select id="modalOrderStatus">
-        <option value="">Order Status</option>
-        <option value="pending">pending</option>
-        <option value="processing">processing</option>
-        <option value="shipped">shipped</option>
-        <option value="delivered">delivered</option>
-      </select>
-    </div>
-    <div>
-      <label>Payment Status</label>
-      <select id="modalPaymentStatus">
-        <option value="">Select Payment Status</option>
-        <option value="paid">Paid</option>
-        <option value="unpaid">Unpaid</option>
-      </select>
-    </div>
-    <div>
-      <label>Total Amount</label>
-      <input id="modalTotalAmount" placeholder="Total Amount" type="number" step="0.01">
-    </div>
-    <div>
-      <label>Shipping Address</label>
-      <input id="modalShippingAddress" placeholder="Shipping Address">
-    </div>
-    <div>
-      <label>Account Created By</label>
-      <input id="modalAccountCreatedBy" placeholder="Account Created By">
-    </div>
-    <div class="modal-actions" style="grid-column: span 2;">
-      <button class="btn-add" id="modalSaveBtn" onclick="saveSalesOrder()">Save</button>
-      <button class="btn-circle" onclick="closeModal()">✕</button>
-    </div>
-  </div>
- 
 </body>
 </html>
