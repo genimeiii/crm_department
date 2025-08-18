@@ -80,14 +80,30 @@
       stroke: #ffffff;
     }
 
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: #fdfffa;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      color: #333135;
+      margin: 0;
+    }
+
     /* --- Profile modal --- */
     .header-icons {
       display: flex;
       align-items: center;
       gap: 1.5rem;
       justify-content: flex-end;
-      margin-top: -70px; 
-      margin-bottom: 1rem;
     }
 
     .profile-dropdown {
@@ -262,14 +278,26 @@
     <!-- Main -->
     <main class="main">
       
-      <h1>Welcome to SkinBloom — CRM!</h1>
-
-      <div class="header-icons">
-        <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-        </svg>
-        <img src="profile.jpg" alt="Profile" class="profile-img" />
-      </div> 
+      <!-- Top Navigation Bar -->
+        <div class="top-nav">
+          <h1 class="page-title">Welcome to Skin Bloom - CRM</h1>
+          <div class="header-icons">
+            <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+            </svg>
+            <div style="position:relative;">
+              <img src="profile.jpg" alt="Profile" class="profile-img" id="profile-btn" />
+              <div id="profile-dropdown" class="profile-dropdown">
+                <img src="profile.jpg" alt="Profile" class="profile-dropdown-img">
+                <div class="profile-dropdown-info">
+                  <div id="profile-name">Jenna Marie Hiponia</div>
+                  <div id="profile-email">jenna.prittie.marie@test.com</div>
+                  <div id="profile-role">Role: Admin</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       <!-- Summary Cards -->
       <div class="dashboard-grid">
@@ -413,7 +441,6 @@
             data.opportunities.map(o => `<tr><td>${o.stage}</td><td>${o.count}</td><td>₱${Number(o.total_value).toLocaleString()}</td></tr>`).join('');
         
         // --- LOGOUT MODAL LOGIC ---
-
         // Show the logout modal
         function showLogoutModal() {
             document.getElementById('logout-modal').style.display = 'flex';
@@ -422,13 +449,11 @@
         function hideLogoutModal() {
             document.getElementById('logout-modal').style.display = 'none';
         }
-
         // Attach modal logic to buttons
         document.getElementById('cancel-logout').onclick = hideLogoutModal;
         document.getElementById('confirm-logout').onclick = function() {
             window.location.href = 'login.html';
         };
-
         // Attach modal to sidebar logout link
         const logoutLink = document.querySelector('.bottom a:last-child');
         if (logoutLink) {
@@ -437,6 +462,41 @@
                 showLogoutModal();
             };
         }
+
+        // Profile dropdown toggle
+            document.getElementById('profile-btn').addEventListener('click', function() {
+              const dropdown = document.getElementById('profile-dropdown');
+              dropdown.classList.toggle('show');
+            });
+
+            // 1. Get the logged-in username
+            const loggedInUsername = localStorage.getItem('loggedInUser');
+            // 2. Fetch user info from the database
+            async function fetchUserProfile(username) {
+              if (!username) return;
+              try {
+                // Use your Neon connection (already imported as 'sql')
+                const result = await sql`
+                  SELECT username, email, role, first_name, last_name
+                  FROM users
+                  WHERE username = ${username}
+                  LIMIT 1
+                `;
+                if (result.length > 0) {
+                  const user = result[0];
+                  // Fill the profile dropdown with real data
+                  document.getElementById('profile-name').textContent = user.first_name && user.last_name
+                    ? user.first_name + ' ' + user.last_name
+                    : user.username;
+                  document.getElementById('profile-email').textContent = user.email;
+                  document.getElementById('profile-role').textContent = "Role: " + (user.role || "User");
+                }
+              } catch (err) {
+                console.error("Failed to fetch user profile:", err);
+              }
+            }
+            // 3. Call this function on page load
+            fetchUserProfile(loggedInUsername);
 });
 
 </script>
@@ -445,4 +505,5 @@
 </body>
 
 </html>
+
 
