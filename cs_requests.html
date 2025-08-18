@@ -7,396 +7,91 @@
   <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-
-    .container {
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .sidebar {
-      width: 240px;
-      background-color: #fdfffa;
-      padding: 20px 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      font-weight: 500;
-      font-size: 1.5rem;
-      margin-bottom: 30px;
-      padding-left: 20px;
-
-      background: linear-gradient(70deg, #cc79f0, #3e7ef7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .logo img {
-      height: 40px;
-      width: auto;
-      object-fit: contain;
-      margin-left: 5px;
-    }
-
-    .logo .logoname {
-      font-family: 'Great Vibes', cursive;
-      font-weight: 600;
-      color: #333135;
-      padding-top: 10px;
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .nav a,
-    .bottom a {
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 20px;
-      color: #333135;
-      font-weight: 640;
-      text-decoration: none;
-      border-radius: 8px;
-      margin: 0 7px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .nav a:hover,
-    .bottom a:hover {
-      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav a.active {
-      background: linear-gradient(90deg, #cc79f0, #3e7ef7);
-      color: #fdfffa;
-      -webkit-background-clip: unset;
-      -webkit-text-fill-color: #fdfffa;
-      background-clip: unset;
-    }
-
-    .bottom {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .nav svg,
-    .bottom svg {
-      stroke: #6B7280; 
-      transition: stroke 0.3s ease;
-    }
-
-    .nav a:hover svg,
-    .bottom a:hover svg {
-      stroke: #cc79f0; 
-    }
-
-    .nav a.active svg {
-      stroke: #ffffff;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Segoe UI', Arial, sans-serif; }
+    .container { display: flex; height: 100vh; overflow: hidden; }
+    .sidebar { width: 240px; background-color: #fdfffa; padding: 20px 0; display: flex; flex-direction: column; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1.5rem; margin-bottom: 30px; padding-left: 20px; background: linear-gradient(70deg, #cc79f0, #3e7ef7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+    .logo img { height: 40px; width: auto; object-fit: contain; margin-left: 5px; }
+    .logo .logoname { font-family: 'Great Vibes', cursive; font-weight: 600; color: #333135; padding-top: 10px; }
+    .nav { display: flex; flex-direction: column; flex: 1; overflow-y: auto; }
+    .nav a, .bottom a { font-size: 14px; display: flex; align-items: center; gap: 12px; padding: 11px 20px; color: #333135; font-weight: 640; text-decoration: none; border-radius: 8px; margin: 0 7px; transition: background-color 0.3s, color 0.3s; }
+    .nav a:hover, .bottom a:hover { background: linear-gradient(90deg, #cc79f0, #3e7ef7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav a.active { background: linear-gradient(90deg, #cc79f0, #3e7ef7); color: #fdfffa; -webkit-background-clip: unset; -webkit-text-fill-color: #fdfffa; background-clip: unset; }
+    .bottom { margin-top: auto; display: flex; flex-direction: column; }
+    .nav svg, .bottom svg { stroke: #6B7280; transition: stroke 0.3s ease; }
+    .nav a:hover svg, .bottom a:hover svg { stroke: #cc79f0; }
+    .nav a.active svg { stroke: #ffffff; }
 
     /* --- Main Content Styling --- */
-    .main {
-      flex: 1;
-      padding: 2rem 3rem;
-      background-color: #fdfffa;
-      overflow-y: auto;
-      font-family: 'Quicksand', sans-serif;
-    }
+    .main { flex: 1; padding: 2rem 3rem; background-color: #fdfffa; overflow-y: auto; font-family: 'Quicksand', sans-serif; padding-top: 0.5rem; }
+    .top-bar { display: flex; align-items: center; gap: 18px; margin-bottom: 2rem; margin-top: 0.5rem; }
+    .top-bar .page-title { margin: 0; font-size: 26px; font-family: 'Poppins', sans-serif; color: #333135; flex-shrink: 0; }
+    .select-container, .search-container { flex-shrink: 0; }
+    .header-icons { margin-left: auto; display: flex; align-items: center; gap: 1.5rem; }
+    .icon-bell { width: 24px; height: 24px; stroke: #6b7280; cursor: pointer; transition: stroke 0.3s ease; }
+    .icon-bell:hover { stroke: #4b8efb; }
+    .profile-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #d1d5db; transition: border-color 0.3s ease; }
+    .profile-img:hover { border-color: #4b8efb; }
 
-    h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 26px;
-      margin-bottom: 1.5rem;
-      color: #333135;
-    }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background-color: #fdfffa;
-      padding: 1rem 3rem;
+    .select-container { position: relative; display: inline-block; width: 200px; }
+    .select-container select { width: 100%; padding: 8px 36px 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; background-color: white; appearance: none; outline: none; cursor: pointer; min-width: 120px; transition: border-color 0.2s; }
+    .select-container select:hover, .select-container select:focus { border-color: #B3B3B3; }
+    .arrow-down-icon { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); width: 16px; height: 16px; stroke: #333; pointer-events: none; }
+    .top-controls {display: flex; align-items: center; gap: 18px; margin-bottom: 1.5rem; margin-top: 1.5rem;}
+    
+    .top-bar {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
+      margin-bottom: 0.5rem;
     }
 
-    .page-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 26px;
-      color: #333135;
-      margin: 0;
-    }
+    .horizontal-line {
+            height: 1px;
+            background-color: #E5E7EB;
+            width: 90%;
+            margin: 0 auto;
+            opacity: 0.4;
+          }
+    .search-container { display: flex; align-items: center; border: 1px solid #B3B3B3; border-radius: 999px; padding: 6px 12px; width: 100%; max-width: 400px; background-color: #f9f9f9; transition: border-color 0.2s; }
+    .search-container:focus-within { border-color: #B3B3B3; }
+    .search-icon { width: 18px; height: 18px; margin-right: 8px; color: #B3B3B3; }
+    .search-container input { border: none; outline: none; width: 100%; background: transparent; font-size: 14px; }
 
-    /* --- Profile modal --- */
-    .header-icons {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      justify-content: flex-end;
-    }
-
-    .profile-dropdown {
-      display: none;
-      position: absolute;
-      top: 42px;
-      right: 0;
-      min-width: 260px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-      padding: 18px 22px 18px 22px;
-      z-index: 100;
-      flex-direction: row;
-      align-items: center;
-      gap: 18px;
-      border: 1px solid #eee;
-    }
-    .profile-dropdown.show {
-      display: flex;
-      animation: fadeIn 0.18s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .profile-dropdown-img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 12px;
-      border: 2px solid #b16cea;
-    }
-    .profile-dropdown-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .profile-dropdown-info #profile-name {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 2px;
-    }
-    .profile-dropdown-info #profile-email {
-      color: #666;
-      font-size: 0.95rem;
-      margin-bottom: 2px;
-    }
-    .profile-dropdown-info #profile-role {
-      color: #b16cea;
-      font-size: 0.93rem;
-      font-weight: 500;
-    }
-
-    .icon-bell {
-      width: 24px;
-      height: 24px;
-      stroke: #6b7280;
-      cursor: pointer;
-      transition: stroke 0.3s ease;
-    }
-
-    .icon-bell:hover {
-      stroke: #4b8efb;
-    }
-
-    .profile-img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-      border: 2px solid #d1d5db;
-      transition: border-color 0.3s ease;
-    }
-
-    .profile-img:hover {
-      border-color: #4b8efb;
-    }
-
-    .top-controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 2rem;
-      align-items: center;
-      padding: 10px;
-    }
-
-    .select-container {
-      position: relative;
-      display: inline-block;
-      width: 200px; 
-    }
-
-    .select-container select {
-      width: 100%;
-      padding: 8px 36px 8px 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      background-color: white;
-      appearance: none;
-      outline: none;
-      cursor: pointer;
-      min-width: 120px;
-      transition: border-color 0.2s;
-    }
-
-    .select-container select:hover,
-    .select-container select:focus {
-      border-color: #B3B3B3;
-    }
-
-    .arrow-down-icon {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
-      stroke: #333;
-      pointer-events: none;
-    }
-
-    .search-container {
-      display: flex;
-      align-items: center;
-      border: 1px solid #B3B3B3;
-      border-radius: 999px;
-      padding: 6px 12px;
-      width: 100%;
-      max-width: 400px;
-      background-color: #f9f9f9;
-      transition: border-color 0.2s;
-    }
-
-    .search-container:focus-within {
-      border-color: #B3B3B3;
-    }
-
-    .search-icon {
-      width: 18px;
-      height: 18px;
-      margin-right: 8px;
-      color: #B3B3B3;
-    }
-
-    .search-container input {
-      border: none;
-      outline: none;
-      width: 100%;
-      background: transparent;
-      font-size: 14px;
-    }
-
-    .icon-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      align-items: center;
-      width: 100%;
-      margin: 1rem 0 1rem auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.5rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-    }
-
-    th, td {
-      padding: 8px 10px;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    th {
-      color: #4B5563;
-      font-weight: 600;
-      border-bottom: 1px solid #E5E7EB;
-    }
-
-    #output {
-      background-color: #f8f8f8;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
-      font-size: 14px;
-    }
-
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-    .modal-box {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 500px;
-      width: 90%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .modal-box h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 20px;
-      color: #374151;
-    }
-
-    .modal-box input {
-      padding: 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
+    .icon-buttons { display: flex; gap: 1rem; justify-content: flex-end; align-items: center; width: 100%; margin: 1rem 0 1rem auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-family: 'Inter', sans-serif; font-size: 13px; }
+    th, td { padding: 8px 10px; text-align: left; font-size: 13px; }
+    th { color: #4B5563; font-weight: 600; border-bottom: 1px solid #E5E7EB; }
+    .status-badge { display: block; padding: 4px 8px; border-radius: 7px; font-size: 13px; font-weight: 600; color: #fdfffa; letter-spacing: 0.5px; text-align: center; }
+    .status-pending { background-color: #f59e0b; }
+    .status-approved { background-color: #4ade80; }
+    .status-rejected { background-color: #cf2c3a; }
+    .table-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-add { display: flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #9b8cfb, #3799fb); color: white; border: none; padding: 10px 20px; border-radius: 9999px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.3s ease; }
+    .btn-add:hover { background: linear-gradient(90deg, #8b7cfb, #318af7); }
+    .btn-add .icon { width: 18px; height: 18px; stroke: white; }
+    .btn-circle { width: 42px; height: 42px; background-color: #f1f1f5; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.3s ease; }
+    .btn-circle:hover { background-color: #e0e0eb; }
+    .action-btn { width: 32px; height: 32px; border: none; background-color: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease; }
+    .action-btn svg { width: 18px; height: 18px; stroke: #6b7280; transition: stroke 0.2s ease; }
+    .action-btn:hover { background-color: #f1f1f5; }
+    .action-btn:hover svg { stroke: #4b8efb; }
+    #output { background-color: #f8f8f8; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10); font-size: 14px; }
+    .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.4); display: none; align-items: center; justify-content: center; z-index: 999; padding: 2rem; }
+    .modal-box { background: #fff; padding: 2rem; border-radius: 12px; max-width: 500px; width: 90%; display: flex; flex-direction: column; gap: 1rem; max-height: 80vh;  overflow-y: auto; }
+    .modal-box h2 { font-family: 'Poppins', sans-serif; font-size: 20px; color: #374151; grid-column: span 2; }
+    .modal-box input, .modal-box select, .modal-box textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; width: 100%; min-width: 0; }
+    .modal-actions { display: flex; justify-content: space-between; margin-top: 1rem; }
+    /* Profile Dropdown */
+    .profile-dropdown { display: none; position: absolute; top: 42px; right: 0; min-width: 260px; background: #fff; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.13); padding: 18px 22px 18px 22px; z-index: 100; flex-direction: row; align-items: center; gap: 18px; border: 1px solid #eee; }
+    .profile-dropdown.show { display: flex; animation: fadeIn 0.18s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
+    .profile-dropdown-img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; margin-right: 12px; border: 2px solid #b16cea; }
+    .profile-dropdown-info { display: flex; flex-direction: column; justify-content: center; }
+    .profile-dropdown-info #profile-name { font-weight: 600; font-size: 1.1rem; margin-bottom: 2px; }
+    .profile-dropdown-info #profile-email { color: #666; font-size: 0.95rem; margin-bottom: 2px; }
+    .profile-dropdown-info #profile-role { color: #b16cea; font-size: 0.93rem; font-weight: 500; }
 
     /* --- log out modal --- */
     .custom-modal {
@@ -445,8 +140,7 @@
     .confirm-btn:hover {
       background: linear-gradient(90deg, #ff4eaf 0%, #ffb86c 100%);
       color: #fff;
-    }
-    
+    }      
   </style>
 
   <script type="module">
@@ -559,28 +253,30 @@
         </div>
       </aside>
 
-      <!-- Main Content -->
-      <main class="main">
-        <!-- Top Navigation Bar -->
-        <div class="top-nav">
-          <h1 class="page-title">Customer Support</h1>
-          <div class="header-icons">
-            <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-            </svg>
-            <div style="position:relative;">
-              <img src="profile.jpg" alt="Profile" class="profile-img" id="profile-btn" />
-              <div id="profile-dropdown" class="profile-dropdown">
-                <img src="profile.jpg" alt="Profile" class="profile-dropdown-img">
-                <div class="profile-dropdown-info">
-                  <div id="profile-name">Jenna Marie Hiponia</div>
-                  <div id="profile-email">jenna.prittie.marie@test.com</div>
-                  <div id="profile-role">Role: Admin</div>
-                </div>
+    <!-- Main Content -->
+    <main class="main">
+      <div class="top-bar">
+        <h1 class="page-title">Customer Support</h1>
+        <div class="header-icons">
+          <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+          </svg>
+          <div style="position:relative;">
+            <img src="profile.jpg" alt="Profile" class="profile-img" id="profile-btn" />
+            <div id="profile-dropdown" class="profile-dropdown">
+              <img src="profile.jpg" alt="Profile" class="profile-dropdown-img">
+              <div class="profile-dropdown-info">
+                <div id="profile-name">Jenna Marie Hiponia</div>
+                <div id="profile-email">jenna.prittie.marie@test.com</div>
+                <div id="profile-role">Role: Admin</div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Horizontal Line -->
+        <div class="horizontal-line"></div>
 
         <div class="top-controls">
           <div class="select-container">
@@ -717,5 +413,4 @@
   </body>
 
 </html>
-
 
