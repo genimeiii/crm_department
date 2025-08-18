@@ -680,8 +680,7 @@
         </div>
 
         <script>
-          // --- LOGOUT MODAL LOGIC BELOW ---
-
+          // --- LOGOUT MODAL LOGIC ---
           // Show the logout modal
           function showLogoutModal() {
               document.getElementById('logout-modal').style.display = 'flex';
@@ -690,13 +689,11 @@
           function hideLogoutModal() {
               document.getElementById('logout-modal').style.display = 'none';
           }
-
           // Attach modal logic to buttons
           document.getElementById('cancel-logout').onclick = hideLogoutModal;
           document.getElementById('confirm-logout').onclick = function() {
               window.location.href = 'login.html';
           };
-
           // Attach modal to sidebar logout link
           const logoutLink = document.querySelector('.bottom a:last-child');
           if (logoutLink) {
@@ -1270,3 +1267,4 @@
   </script>
 </body>
 </html>
+
