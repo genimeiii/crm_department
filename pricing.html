@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Quotation & Pricing</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -55,6 +56,13 @@
       width: auto;
       object-fit: contain;
       margin-left: 5px;
+    }
+
+    .logo .logoname {
+      font-family: 'Great Vibes', cursive;
+      font-weight: 600;
+      color: #333135;
+      padding-top: 10px;
     }
 
     .nav {
@@ -132,13 +140,83 @@
       color: #333135;
     }
 
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: #fdfffa;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      color: #333135;
+      margin: 0;
+    }
+
+    /* --- Profile modal --- */
     .header-icons {
       display: flex;
       align-items: center;
       gap: 1.5rem;
       justify-content: flex-end;
-      margin-top: -70px; 
-      margin-bottom: 1rem;
+    }
+
+    .profile-dropdown {
+      display: none;
+      position: absolute;
+      top: 42px;
+      right: 0;
+      min-width: 260px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      padding: 18px 22px 18px 22px;
+      z-index: 100;
+      flex-direction: row;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid #eee;
+    }
+    .profile-dropdown.show {
+      display: flex;
+      animation: fadeIn 0.18s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .profile-dropdown-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 12px;
+      border: 2px solid #b16cea;
+    }
+    .profile-dropdown-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .profile-dropdown-info #profile-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+    .profile-dropdown-info #profile-email {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+    .profile-dropdown-info #profile-role {
+      color: #b16cea;
+      font-size: 0.93rem;
+      font-weight: 500;
     }
 
     .icon-bell {
@@ -166,6 +244,7 @@
     .profile-img:hover {
       border-color: #4b8efb;
     }
+
 
     .top-controls {
       display: flex;
@@ -442,6 +521,56 @@
       justify-content: space-between;
       margin-top: 1rem;
     }
+
+    /* --- log out modal --- */
+    .custom-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.534);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .custom-modal[style*="display: flex"] {
+      display: flex !important;
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 36px 32px 28px 32px;
+      min-width: 340px;
+      max-width: 90vw;
+      text-align: center;
+    }
+    .logout-btn {
+      padding: 10px 28px;
+      border-radius: 24px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .cancel-btn {
+      border: 2px solid #b16cea;
+      background: #fff;
+      color: #b16cea;
+    }
+    .cancel-btn:hover {
+      background: #f3e8ff;
+      color: #a21caf;
+      border-color: #a21caf;
+    }
+    .confirm-btn {
+      border: none;
+      background: linear-gradient(90deg,#6ea8fe,#b16cea);
+      color: #fff;
+    }
+    .confirm-btn:hover {
+      background: linear-gradient(90deg, #ff4eaf 0%, #ffb86c 100%);
+      color: #fff;
+    }
+    
   </style>
 
   <script type="module">
@@ -647,8 +776,8 @@
     <aside class="sidebar">
       <div>
         <div class="logo">
-          <img src="logo.png" alt="Logo" />
-          SkinBloom
+          <img src="logo.png" alt="Logo"/></img>
+          <span class="logoname">Skin Bloom</span>
         </div>
         <nav class="nav">
           <a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
@@ -666,14 +795,26 @@
 
     <!-- Main Content -->
     <main class="main">
-      <h1>Quotation & Pricing</h1>
-
-      <div class="header-icons">
-        <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
-        </svg>
-        <img src="profile.jpg" alt="Profile" class="profile-img" />
-      </div>
+      <!-- Top Navigation Bar -->
+        <div class="top-nav">
+          <h1 class="page-title">Quotation & Pricing</h1>
+          <div class="header-icons">
+            <svg class="icon-bell" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 01-6 0v-1m6 0H9" />
+            </svg>
+            <div style="position:relative;">
+              <img src="profile.jpg" alt="Profile" class="profile-img" id="profile-btn" />
+              <div id="profile-dropdown" class="profile-dropdown">
+                <img src="profile.jpg" alt="Profile" class="profile-dropdown-img">
+                <div class="profile-dropdown-info">
+                  <div id="profile-name">Jenna Marie Hiponia</div>
+                  <div id="profile-email">jenna.prittie.marie@test.com</div>
+                  <div id="profile-role">Role: Admin</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       <div class="top-controls">
         <div class="select-container">
@@ -688,6 +829,24 @@
           </svg>
         </div>
 
+        <!-- Logout Confirmation Modal -->
+        <div id="logout-modal" style="display:none;" class="custom-modal">
+          <div class="modal-content" style="min-width:340px; text-align:center;">
+            <div style="margin-bottom:15px;">
+              <img src="excla.png" alt="Success" style="height: 80px; weight: 80px">
+            </div>
+            <h2 style="color:#222; margin-bottom:8px;">Are you logging out?</h2>
+            <div style="color:#444; margin-bottom:24px; font-size: 0.8rem;">
+              Are you sure want to log out?<br>
+              All your unsaved data will be lost.
+            </div>
+            <div style="display:flex; justify-content:center; gap:18px;">
+              <button id="cancel-logout" class="logout-btn cancel-btn">Cancel</button>
+              <button id="confirm-logout" class="logout-btn confirm-btn">Log out</button>
+            </div>
+          </div>
+        </div>
+
         <script>
           function navigateToPage() {
             const selectedValue = document.getElementById("QAP").value;
@@ -695,6 +854,64 @@
               window.location.href = selectedValue;
             }
           }
+
+          // --- LOGOUT MODAL LOGIC ---
+          // Show the logout modal
+          function showLogoutModal() {
+              document.getElementById('logout-modal').style.display = 'flex';
+          }
+          // Hide the logout modal
+          function hideLogoutModal() {
+              document.getElementById('logout-modal').style.display = 'none';
+          }
+          // Attach modal logic to buttons
+          document.getElementById('cancel-logout').onclick = hideLogoutModal;
+          document.getElementById('confirm-logout').onclick = function() {
+              window.location.href = 'login.html';
+          };
+          // Attach modal to sidebar logout link
+          const logoutLink = document.querySelector('.bottom a:last-child');
+          if (logoutLink) {
+              logoutLink.onclick = function(event) {
+                  event.preventDefault();
+                  showLogoutModal();
+              };
+          }
+          
+              // Profile dropdown toggle
+            document.getElementById('profile-btn').addEventListener('click', function() {
+              const dropdown = document.getElementById('profile-dropdown');
+              dropdown.classList.toggle('show');
+            });
+
+            // 1. Get the logged-in username
+            const loggedInUsername = localStorage.getItem('loggedInUser');
+            // 2. Fetch user info from the database
+            async function fetchUserProfile(username) {
+              if (!username) return;
+              try {
+                // Use your Neon connection (already imported as 'sql')
+                const result = await sql`
+                  SELECT username, email, role, first_name, last_name
+                  FROM users
+                  WHERE username = ${username}
+                  LIMIT 1
+                `;
+                if (result.length > 0) {
+                  const user = result[0];
+                  // Fill the profile dropdown with real data
+                  document.getElementById('profile-name').textContent = user.first_name && user.last_name
+                    ? user.first_name + ' ' + user.last_name
+                    : user.username;
+                  document.getElementById('profile-email').textContent = user.email;
+                  document.getElementById('profile-role').textContent = "Role: " + (user.role || "User");
+                }
+              } catch (err) {
+                console.error("Failed to fetch user profile:", err);
+              }
+            }
+            // 3. Call this function on page load
+            fetchUserProfile(loggedInUsername);
         </script>
 
         <div class="search-container">
@@ -743,3 +960,4 @@
 
 </body>
 </html>
+
