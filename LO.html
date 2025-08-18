@@ -562,6 +562,32 @@
       background: linear-gradient(90deg, #ff4eaf 0%, #ffb86c 100%);
       color: #fff;
     }
+    .btn-add {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #9b8cfb, #3799fb);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: linear-gradient(90deg, #8b7cfb, #318af7);
+    }
+
+    .btn-add .icon {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+    }
+
 
   </style>
 </head>
@@ -664,8 +690,17 @@
                 </div>
               </div>
 
-        <!-- Horizontal Line -->
+       <!-- Horizontal Line -->
         <div class="horizontal-line"></div>
+        <div class="icon-buttons">
+          <button class="btn-add" onclick="openLeadModal()">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4v16m8-8H4" />
+            </svg>
+            Add
+          </button>
+        </div>
 
         <!-- Main Content Area -->
         <div class="main-content">
@@ -949,7 +984,49 @@
       } catch (err) {
         document.getElementById('output').textContent = 'Error: ' + err.message;
       }
+      // Fetch all sales leads with JOINs
+async function fetchAllLeads() {
+  // ...existing code...
+}
+
+// ADD THIS FUNCTION HERE:
+window.openLeadModal = function() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.style.display = 'flex';
+  modal.innerHTML = `
+    <div class="modal-box">
+      <h2>Add Lead</h2>
+      <input id="newLeadCustomerId" placeholder="Customer ID">
+      <input id="newLeadSource" placeholder="Source">
+      <select id="newLeadStatus">
+        <option value="new">New</option>
+        <option value="contacted">Contacted</option>
+        <option value="qualified">Qualified</option>
+        <option value="lost">Lost</option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-add" onclick="saveNewLead()">Save</button>
+        <button class="btn-circle" onclick="this.closest('.modal-overlay').remove()">✕</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+};
+
+window.saveNewLead = async function() {
+  const customerId = document.getElementById("newLeadCustomerId").value;
+  const source = document.getElementById("newLeadSource").value;
+  const status = document.getElementById("newLeadStatus").value;
+  await sql`
+    INSERT INTO sales_leads (customer_id, lead_source, lead_status, created_at)
+    VALUES (${customerId}, ${source}, ${status}, NOW())
+  `;
+  document.querySelector('.modal-overlay').remove();
+  fetchAllLeads();
+};
     }
+    
 
     // Render lead table
     function renderLeadTable(data) {
@@ -1269,5 +1346,4 @@
 </body>
 
 </html>
-
 
