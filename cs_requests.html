@@ -141,6 +141,29 @@
       background: linear-gradient(90deg, #ff4eaf 0%, #ffb86c 100%);
       color: #fff;
     }      
+    /*status*/
+    .status-badge {
+      display: block;
+      padding: 4px 8px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fdfffa;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .status-open {
+      background-color: #1979fe;
+    }
+    .status-closed {
+      background-color: #cf2c3a;
+    }
+    .status-in-progress {
+      background-color: #ffa300;
+    }
+    .status-resolved {
+      background-color: #00b146;
+    }
   </style>
 
   <script type="module">
@@ -184,10 +207,20 @@
             <th>Request Type</th>
             <th>Request Status</th>
             <th>Ticket Status</th>
+            <th style="text-align:right;">Actions</th>
           </tr>
       `;
 
       for (const row of data) {
+        const status = (row.ticket_status || '').toLowerCase();
+        let statusClass = '';
+        if ( status === 'open') statusClass = 'status-badge status-open';
+        else if (status === 'closed') statusClass = 'status-badge status-closed';
+        else if (status === 'in-progress') statusClass = 'status-badge status-in-progress';
+        else if (status === 'resolved') statusClass = 'status-badge status-resolved';
+
+        
+
         html += `
           <tr>
             <td>${row.request_id}</td>
@@ -196,7 +229,30 @@
             <td>${row.customer && row.customer.trim() !== '' ? row.customer : '—'}</td>
             <td>${row.service_type ?? '—'}</td>
             <td>${row.service_status ?? '—'}</td>
-            <td>${row.ticket_status ?? '—'}</td>
+            <td><span class="${statusClass}">${
+              row.ticket_status
+              ? row.ticket_status.charAt(0).toUpperCase() + row.ticket_status.slice(1).toLowerCase()
+              : ''
+            }</span></td>
+
+            <td>
+              <div class="table-actions">
+                <!-- View Button -->
+                <button class="action-btn" onclick="viewRequests(${row.request_id})" title="View">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
+
+                <!-- Edit Button -->
+                <button class="action-btn" onclick="editRequests(${row.request_id})" title="Edit">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652l-1.688 1.687m-2.651-2.651L6.478 16.22a4.5 4.5 0 00-1.12 1.873l-.622 2.49a.375.375 0 00.465.465l2.49-.622a4.5 4.5 0 001.873-1.12l10.386-10.387m-2.651-2.651l2.651 2.651" />
+                  </svg>
+                </button>
+              </div>
+            </td>
           </tr>
         `;
       }
@@ -227,6 +283,8 @@
         });
       }
     };
+
+    
   </script>
 
 </head>
@@ -413,4 +471,3 @@
   </body>
 
 </html>
-
