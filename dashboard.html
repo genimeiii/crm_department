@@ -412,7 +412,7 @@
         document.querySelector('#opportunityTable tbody').innerHTML =
             data.opportunities.map(o => `<tr><td>${o.stage}</td><td>${o.count}</td><td>₱${Number(o.total_value).toLocaleString()}</td></tr>`).join('');
         
-        // --- LOGOUT MODAL LOGIC BELOW ---
+        // --- LOGOUT MODAL LOGIC ---
 
         // Show the logout modal
         function showLogoutModal() {
@@ -445,3 +445,4 @@
 </body>
 
 </html>
+
